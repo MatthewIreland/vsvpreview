@@ -1,0 +1,1122 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    vsvHighlightNoWrap
+
+Grammar
+
+Rule 0     S' -> latexBlock
+Rule 1     latexString -> STRING
+Rule 2     latexString -> WHITESPACE
+Rule 3     latexString -> NEWLINE
+Rule 4     latexString -> STRING latexString
+Rule 5     latexString -> WHITESPACE latexString
+Rule 6     latexString -> NEWLINE latexString
+Rule 7     latexBlock -> latexString latexBlock
+Rule 8     latexBlock -> <empty>
+Rule 9     latexBlock -> greyEnv latexBlock
+Rule 10    latexBlock -> appearEnv latexBlock
+Rule 11    latexBlock -> hl latexBlock
+Rule 12    latexBlock -> correct latexBlock
+Rule 13    latexBlock -> list latexBlock
+Rule 14    greyEnv -> vsvBeginEnvGrey latexBlock vsvEndEnvGrey
+Rule 15    appearEnv -> vsvBeginEnvAppear latexBlock vsvEndEnvAppear
+Rule 16    hl -> vsvHighlight
+Rule 17    correct -> vsvCorrect
+Rule 18    list -> vsvListBeginItemize latexString listBody vsvListEndItemize
+Rule 19    list -> vsvListBeginEnumerate latexString listBody vsvListEndEnumerate
+Rule 20    list -> vsvListBeginDescription latexString listBody vsvListEndDescription
+Rule 21    listBody -> <empty>
+Rule 22    listBody -> vsvItem latexBlock listBody
+
+Terminals, with rules where they appear
+
+NEWLINE              : 3 6
+STRING               : 1 4
+WHITESPACE           : 2 5
+error                : 
+vsvBeginEnvAppear    : 15
+vsvBeginEnvGrey      : 14
+vsvCorrect           : 17
+vsvEndEnvAppear      : 15
+vsvEndEnvGrey        : 14
+vsvHighlight         : 16
+vsvHighlightNoWrap   : 
+vsvItem              : 22
+vsvListBeginDescription : 20
+vsvListBeginEnumerate : 19
+vsvListBeginItemize  : 18
+vsvListEndDescription : 20
+vsvListEndEnumerate  : 19
+vsvListEndItemize    : 18
+
+Nonterminals, with rules where they appear
+
+appearEnv            : 10
+correct              : 12
+greyEnv              : 9
+hl                   : 11
+latexBlock           : 7 9 10 11 12 13 14 15 22 0
+latexString          : 4 5 6 7 18 19 20
+list                 : 13
+listBody             : 18 19 20 22
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . latexBlock
+    (7) latexBlock -> . latexString latexBlock
+    (8) latexBlock -> .
+    (9) latexBlock -> . greyEnv latexBlock
+    (10) latexBlock -> . appearEnv latexBlock
+    (11) latexBlock -> . hl latexBlock
+    (12) latexBlock -> . correct latexBlock
+    (13) latexBlock -> . list latexBlock
+    (1) latexString -> . STRING
+    (2) latexString -> . WHITESPACE
+    (3) latexString -> . NEWLINE
+    (4) latexString -> . STRING latexString
+    (5) latexString -> . WHITESPACE latexString
+    (6) latexString -> . NEWLINE latexString
+    (14) greyEnv -> . vsvBeginEnvGrey latexBlock vsvEndEnvGrey
+    (15) appearEnv -> . vsvBeginEnvAppear latexBlock vsvEndEnvAppear
+    (16) hl -> . vsvHighlight
+    (17) correct -> . vsvCorrect
+    (18) list -> . vsvListBeginItemize latexString listBody vsvListEndItemize
+    (19) list -> . vsvListBeginEnumerate latexString listBody vsvListEndEnumerate
+    (20) list -> . vsvListBeginDescription latexString listBody vsvListEndDescription
+
+    $end            reduce using rule 8 (latexBlock -> .)
+    STRING          shift and go to state 10
+    WHITESPACE      shift and go to state 14
+    NEWLINE         shift and go to state 6
+    vsvBeginEnvGrey shift and go to state 5
+    vsvBeginEnvAppear shift and go to state 3
+    vsvHighlight    shift and go to state 11
+    vsvCorrect      shift and go to state 7
+    vsvListBeginItemize shift and go to state 8
+    vsvListBeginEnumerate shift and go to state 4
+    vsvListBeginDescription shift and go to state 15
+
+    appearEnv                      shift and go to state 1
+    latexString                    shift and go to state 13
+    list                           shift and go to state 16
+    greyEnv                        shift and go to state 2
+    latexBlock                     shift and go to state 9
+    hl                             shift and go to state 12
+    correct                        shift and go to state 17
+
+state 1
+
+    (10) latexBlock -> appearEnv . latexBlock
+    (7) latexBlock -> . latexString latexBlock
+    (8) latexBlock -> .
+    (9) latexBlock -> . greyEnv latexBlock
+    (10) latexBlock -> . appearEnv latexBlock
+    (11) latexBlock -> . hl latexBlock
+    (12) latexBlock -> . correct latexBlock
+    (13) latexBlock -> . list latexBlock
+    (1) latexString -> . STRING
+    (2) latexString -> . WHITESPACE
+    (3) latexString -> . NEWLINE
+    (4) latexString -> . STRING latexString
+    (5) latexString -> . WHITESPACE latexString
+    (6) latexString -> . NEWLINE latexString
+    (14) greyEnv -> . vsvBeginEnvGrey latexBlock vsvEndEnvGrey
+    (15) appearEnv -> . vsvBeginEnvAppear latexBlock vsvEndEnvAppear
+    (16) hl -> . vsvHighlight
+    (17) correct -> . vsvCorrect
+    (18) list -> . vsvListBeginItemize latexString listBody vsvListEndItemize
+    (19) list -> . vsvListBeginEnumerate latexString listBody vsvListEndEnumerate
+    (20) list -> . vsvListBeginDescription latexString listBody vsvListEndDescription
+
+    $end            reduce using rule 8 (latexBlock -> .)
+    vsvEndEnvAppear reduce using rule 8 (latexBlock -> .)
+    vsvEndEnvGrey   reduce using rule 8 (latexBlock -> .)
+    vsvItem         reduce using rule 8 (latexBlock -> .)
+    vsvListEndEnumerate reduce using rule 8 (latexBlock -> .)
+    vsvListEndItemize reduce using rule 8 (latexBlock -> .)
+    vsvListEndDescription reduce using rule 8 (latexBlock -> .)
+    STRING          shift and go to state 10
+    WHITESPACE      shift and go to state 14
+    NEWLINE         shift and go to state 6
+    vsvBeginEnvGrey shift and go to state 5
+    vsvBeginEnvAppear shift and go to state 3
+    vsvHighlight    shift and go to state 11
+    vsvCorrect      shift and go to state 7
+    vsvListBeginItemize shift and go to state 8
+    vsvListBeginEnumerate shift and go to state 4
+    vsvListBeginDescription shift and go to state 15
+
+    appearEnv                      shift and go to state 1
+    latexString                    shift and go to state 13
+    list                           shift and go to state 16
+    greyEnv                        shift and go to state 2
+    latexBlock                     shift and go to state 18
+    hl                             shift and go to state 12
+    correct                        shift and go to state 17
+
+state 2
+
+    (9) latexBlock -> greyEnv . latexBlock
+    (7) latexBlock -> . latexString latexBlock
+    (8) latexBlock -> .
+    (9) latexBlock -> . greyEnv latexBlock
+    (10) latexBlock -> . appearEnv latexBlock
+    (11) latexBlock -> . hl latexBlock
+    (12) latexBlock -> . correct latexBlock
+    (13) latexBlock -> . list latexBlock
+    (1) latexString -> . STRING
+    (2) latexString -> . WHITESPACE
+    (3) latexString -> . NEWLINE
+    (4) latexString -> . STRING latexString
+    (5) latexString -> . WHITESPACE latexString
+    (6) latexString -> . NEWLINE latexString
+    (14) greyEnv -> . vsvBeginEnvGrey latexBlock vsvEndEnvGrey
+    (15) appearEnv -> . vsvBeginEnvAppear latexBlock vsvEndEnvAppear
+    (16) hl -> . vsvHighlight
+    (17) correct -> . vsvCorrect
+    (18) list -> . vsvListBeginItemize latexString listBody vsvListEndItemize
+    (19) list -> . vsvListBeginEnumerate latexString listBody vsvListEndEnumerate
+    (20) list -> . vsvListBeginDescription latexString listBody vsvListEndDescription
+
+    $end            reduce using rule 8 (latexBlock -> .)
+    vsvEndEnvAppear reduce using rule 8 (latexBlock -> .)
+    vsvEndEnvGrey   reduce using rule 8 (latexBlock -> .)
+    vsvItem         reduce using rule 8 (latexBlock -> .)
+    vsvListEndEnumerate reduce using rule 8 (latexBlock -> .)
+    vsvListEndItemize reduce using rule 8 (latexBlock -> .)
+    vsvListEndDescription reduce using rule 8 (latexBlock -> .)
+    STRING          shift and go to state 10
+    WHITESPACE      shift and go to state 14
+    NEWLINE         shift and go to state 6
+    vsvBeginEnvGrey shift and go to state 5
+    vsvBeginEnvAppear shift and go to state 3
+    vsvHighlight    shift and go to state 11
+    vsvCorrect      shift and go to state 7
+    vsvListBeginItemize shift and go to state 8
+    vsvListBeginEnumerate shift and go to state 4
+    vsvListBeginDescription shift and go to state 15
+
+    appearEnv                      shift and go to state 1
+    latexString                    shift and go to state 13
+    list                           shift and go to state 16
+    greyEnv                        shift and go to state 2
+    latexBlock                     shift and go to state 19
+    hl                             shift and go to state 12
+    correct                        shift and go to state 17
+
+state 3
+
+    (15) appearEnv -> vsvBeginEnvAppear . latexBlock vsvEndEnvAppear
+    (7) latexBlock -> . latexString latexBlock
+    (8) latexBlock -> .
+    (9) latexBlock -> . greyEnv latexBlock
+    (10) latexBlock -> . appearEnv latexBlock
+    (11) latexBlock -> . hl latexBlock
+    (12) latexBlock -> . correct latexBlock
+    (13) latexBlock -> . list latexBlock
+    (1) latexString -> . STRING
+    (2) latexString -> . WHITESPACE
+    (3) latexString -> . NEWLINE
+    (4) latexString -> . STRING latexString
+    (5) latexString -> . WHITESPACE latexString
+    (6) latexString -> . NEWLINE latexString
+    (14) greyEnv -> . vsvBeginEnvGrey latexBlock vsvEndEnvGrey
+    (15) appearEnv -> . vsvBeginEnvAppear latexBlock vsvEndEnvAppear
+    (16) hl -> . vsvHighlight
+    (17) correct -> . vsvCorrect
+    (18) list -> . vsvListBeginItemize latexString listBody vsvListEndItemize
+    (19) list -> . vsvListBeginEnumerate latexString listBody vsvListEndEnumerate
+    (20) list -> . vsvListBeginDescription latexString listBody vsvListEndDescription
+
+    vsvEndEnvAppear reduce using rule 8 (latexBlock -> .)
+    STRING          shift and go to state 10
+    WHITESPACE      shift and go to state 14
+    NEWLINE         shift and go to state 6
+    vsvBeginEnvGrey shift and go to state 5
+    vsvBeginEnvAppear shift and go to state 3
+    vsvHighlight    shift and go to state 11
+    vsvCorrect      shift and go to state 7
+    vsvListBeginItemize shift and go to state 8
+    vsvListBeginEnumerate shift and go to state 4
+    vsvListBeginDescription shift and go to state 15
+
+    appearEnv                      shift and go to state 1
+    latexString                    shift and go to state 13
+    list                           shift and go to state 16
+    greyEnv                        shift and go to state 2
+    latexBlock                     shift and go to state 20
+    hl                             shift and go to state 12
+    correct                        shift and go to state 17
+
+state 4
+
+    (19) list -> vsvListBeginEnumerate . latexString listBody vsvListEndEnumerate
+    (1) latexString -> . STRING
+    (2) latexString -> . WHITESPACE
+    (3) latexString -> . NEWLINE
+    (4) latexString -> . STRING latexString
+    (5) latexString -> . WHITESPACE latexString
+    (6) latexString -> . NEWLINE latexString
+
+    STRING          shift and go to state 10
+    WHITESPACE      shift and go to state 14
+    NEWLINE         shift and go to state 6
+
+    latexString                    shift and go to state 21
+
+state 5
+
+    (14) greyEnv -> vsvBeginEnvGrey . latexBlock vsvEndEnvGrey
+    (7) latexBlock -> . latexString latexBlock
+    (8) latexBlock -> .
+    (9) latexBlock -> . greyEnv latexBlock
+    (10) latexBlock -> . appearEnv latexBlock
+    (11) latexBlock -> . hl latexBlock
+    (12) latexBlock -> . correct latexBlock
+    (13) latexBlock -> . list latexBlock
+    (1) latexString -> . STRING
+    (2) latexString -> . WHITESPACE
+    (3) latexString -> . NEWLINE
+    (4) latexString -> . STRING latexString
+    (5) latexString -> . WHITESPACE latexString
+    (6) latexString -> . NEWLINE latexString
+    (14) greyEnv -> . vsvBeginEnvGrey latexBlock vsvEndEnvGrey
+    (15) appearEnv -> . vsvBeginEnvAppear latexBlock vsvEndEnvAppear
+    (16) hl -> . vsvHighlight
+    (17) correct -> . vsvCorrect
+    (18) list -> . vsvListBeginItemize latexString listBody vsvListEndItemize
+    (19) list -> . vsvListBeginEnumerate latexString listBody vsvListEndEnumerate
+    (20) list -> . vsvListBeginDescription latexString listBody vsvListEndDescription
+
+    vsvEndEnvGrey   reduce using rule 8 (latexBlock -> .)
+    STRING          shift and go to state 10
+    WHITESPACE      shift and go to state 14
+    NEWLINE         shift and go to state 6
+    vsvBeginEnvGrey shift and go to state 5
+    vsvBeginEnvAppear shift and go to state 3
+    vsvHighlight    shift and go to state 11
+    vsvCorrect      shift and go to state 7
+    vsvListBeginItemize shift and go to state 8
+    vsvListBeginEnumerate shift and go to state 4
+    vsvListBeginDescription shift and go to state 15
+
+    appearEnv                      shift and go to state 1
+    latexString                    shift and go to state 13
+    list                           shift and go to state 16
+    greyEnv                        shift and go to state 2
+    latexBlock                     shift and go to state 22
+    hl                             shift and go to state 12
+    correct                        shift and go to state 17
+
+state 6
+
+    (3) latexString -> NEWLINE .
+    (6) latexString -> NEWLINE . latexString
+    (1) latexString -> . STRING
+    (2) latexString -> . WHITESPACE
+    (3) latexString -> . NEWLINE
+    (4) latexString -> . STRING latexString
+    (5) latexString -> . WHITESPACE latexString
+    (6) latexString -> . NEWLINE latexString
+
+  ! shift/reduce conflict for STRING resolved as shift
+  ! shift/reduce conflict for WHITESPACE resolved as shift
+  ! shift/reduce conflict for NEWLINE resolved as shift
+    vsvBeginEnvGrey reduce using rule 3 (latexString -> NEWLINE .)
+    vsvBeginEnvAppear reduce using rule 3 (latexString -> NEWLINE .)
+    vsvHighlight    reduce using rule 3 (latexString -> NEWLINE .)
+    vsvCorrect      reduce using rule 3 (latexString -> NEWLINE .)
+    vsvListBeginItemize reduce using rule 3 (latexString -> NEWLINE .)
+    vsvListBeginEnumerate reduce using rule 3 (latexString -> NEWLINE .)
+    vsvListBeginDescription reduce using rule 3 (latexString -> NEWLINE .)
+    $end            reduce using rule 3 (latexString -> NEWLINE .)
+    vsvEndEnvAppear reduce using rule 3 (latexString -> NEWLINE .)
+    vsvEndEnvGrey   reduce using rule 3 (latexString -> NEWLINE .)
+    vsvItem         reduce using rule 3 (latexString -> NEWLINE .)
+    vsvListEndEnumerate reduce using rule 3 (latexString -> NEWLINE .)
+    vsvListEndItemize reduce using rule 3 (latexString -> NEWLINE .)
+    vsvListEndDescription reduce using rule 3 (latexString -> NEWLINE .)
+    STRING          shift and go to state 10
+    WHITESPACE      shift and go to state 14
+    NEWLINE         shift and go to state 6
+
+  ! STRING          [ reduce using rule 3 (latexString -> NEWLINE .) ]
+  ! WHITESPACE      [ reduce using rule 3 (latexString -> NEWLINE .) ]
+  ! NEWLINE         [ reduce using rule 3 (latexString -> NEWLINE .) ]
+
+    latexString                    shift and go to state 23
+
+state 7
+
+    (17) correct -> vsvCorrect .
+
+    STRING          reduce using rule 17 (correct -> vsvCorrect .)
+    WHITESPACE      reduce using rule 17 (correct -> vsvCorrect .)
+    NEWLINE         reduce using rule 17 (correct -> vsvCorrect .)
+    vsvBeginEnvGrey reduce using rule 17 (correct -> vsvCorrect .)
+    vsvBeginEnvAppear reduce using rule 17 (correct -> vsvCorrect .)
+    vsvHighlight    reduce using rule 17 (correct -> vsvCorrect .)
+    vsvCorrect      reduce using rule 17 (correct -> vsvCorrect .)
+    vsvListBeginItemize reduce using rule 17 (correct -> vsvCorrect .)
+    vsvListBeginEnumerate reduce using rule 17 (correct -> vsvCorrect .)
+    vsvListBeginDescription reduce using rule 17 (correct -> vsvCorrect .)
+    $end            reduce using rule 17 (correct -> vsvCorrect .)
+    vsvEndEnvAppear reduce using rule 17 (correct -> vsvCorrect .)
+    vsvEndEnvGrey   reduce using rule 17 (correct -> vsvCorrect .)
+    vsvItem         reduce using rule 17 (correct -> vsvCorrect .)
+    vsvListEndEnumerate reduce using rule 17 (correct -> vsvCorrect .)
+    vsvListEndItemize reduce using rule 17 (correct -> vsvCorrect .)
+    vsvListEndDescription reduce using rule 17 (correct -> vsvCorrect .)
+
+
+state 8
+
+    (18) list -> vsvListBeginItemize . latexString listBody vsvListEndItemize
+    (1) latexString -> . STRING
+    (2) latexString -> . WHITESPACE
+    (3) latexString -> . NEWLINE
+    (4) latexString -> . STRING latexString
+    (5) latexString -> . WHITESPACE latexString
+    (6) latexString -> . NEWLINE latexString
+
+    STRING          shift and go to state 10
+    WHITESPACE      shift and go to state 14
+    NEWLINE         shift and go to state 6
+
+    latexString                    shift and go to state 24
+
+state 9
+
+    (0) S' -> latexBlock .
+
+
+
+state 10
+
+    (1) latexString -> STRING .
+    (4) latexString -> STRING . latexString
+    (1) latexString -> . STRING
+    (2) latexString -> . WHITESPACE
+    (3) latexString -> . NEWLINE
+    (4) latexString -> . STRING latexString
+    (5) latexString -> . WHITESPACE latexString
+    (6) latexString -> . NEWLINE latexString
+
+  ! shift/reduce conflict for STRING resolved as shift
+  ! shift/reduce conflict for WHITESPACE resolved as shift
+  ! shift/reduce conflict for NEWLINE resolved as shift
+    vsvBeginEnvGrey reduce using rule 1 (latexString -> STRING .)
+    vsvBeginEnvAppear reduce using rule 1 (latexString -> STRING .)
+    vsvHighlight    reduce using rule 1 (latexString -> STRING .)
+    vsvCorrect      reduce using rule 1 (latexString -> STRING .)
+    vsvListBeginItemize reduce using rule 1 (latexString -> STRING .)
+    vsvListBeginEnumerate reduce using rule 1 (latexString -> STRING .)
+    vsvListBeginDescription reduce using rule 1 (latexString -> STRING .)
+    $end            reduce using rule 1 (latexString -> STRING .)
+    vsvEndEnvAppear reduce using rule 1 (latexString -> STRING .)
+    vsvEndEnvGrey   reduce using rule 1 (latexString -> STRING .)
+    vsvItem         reduce using rule 1 (latexString -> STRING .)
+    vsvListEndEnumerate reduce using rule 1 (latexString -> STRING .)
+    vsvListEndItemize reduce using rule 1 (latexString -> STRING .)
+    vsvListEndDescription reduce using rule 1 (latexString -> STRING .)
+    STRING          shift and go to state 10
+    WHITESPACE      shift and go to state 14
+    NEWLINE         shift and go to state 6
+
+  ! STRING          [ reduce using rule 1 (latexString -> STRING .) ]
+  ! WHITESPACE      [ reduce using rule 1 (latexString -> STRING .) ]
+  ! NEWLINE         [ reduce using rule 1 (latexString -> STRING .) ]
+
+    latexString                    shift and go to state 25
+
+state 11
+
+    (16) hl -> vsvHighlight .
+
+    STRING          reduce using rule 16 (hl -> vsvHighlight .)
+    WHITESPACE      reduce using rule 16 (hl -> vsvHighlight .)
+    NEWLINE         reduce using rule 16 (hl -> vsvHighlight .)
+    vsvBeginEnvGrey reduce using rule 16 (hl -> vsvHighlight .)
+    vsvBeginEnvAppear reduce using rule 16 (hl -> vsvHighlight .)
+    vsvHighlight    reduce using rule 16 (hl -> vsvHighlight .)
+    vsvCorrect      reduce using rule 16 (hl -> vsvHighlight .)
+    vsvListBeginItemize reduce using rule 16 (hl -> vsvHighlight .)
+    vsvListBeginEnumerate reduce using rule 16 (hl -> vsvHighlight .)
+    vsvListBeginDescription reduce using rule 16 (hl -> vsvHighlight .)
+    $end            reduce using rule 16 (hl -> vsvHighlight .)
+    vsvEndEnvAppear reduce using rule 16 (hl -> vsvHighlight .)
+    vsvEndEnvGrey   reduce using rule 16 (hl -> vsvHighlight .)
+    vsvItem         reduce using rule 16 (hl -> vsvHighlight .)
+    vsvListEndEnumerate reduce using rule 16 (hl -> vsvHighlight .)
+    vsvListEndItemize reduce using rule 16 (hl -> vsvHighlight .)
+    vsvListEndDescription reduce using rule 16 (hl -> vsvHighlight .)
+
+
+state 12
+
+    (11) latexBlock -> hl . latexBlock
+    (7) latexBlock -> . latexString latexBlock
+    (8) latexBlock -> .
+    (9) latexBlock -> . greyEnv latexBlock
+    (10) latexBlock -> . appearEnv latexBlock
+    (11) latexBlock -> . hl latexBlock
+    (12) latexBlock -> . correct latexBlock
+    (13) latexBlock -> . list latexBlock
+    (1) latexString -> . STRING
+    (2) latexString -> . WHITESPACE
+    (3) latexString -> . NEWLINE
+    (4) latexString -> . STRING latexString
+    (5) latexString -> . WHITESPACE latexString
+    (6) latexString -> . NEWLINE latexString
+    (14) greyEnv -> . vsvBeginEnvGrey latexBlock vsvEndEnvGrey
+    (15) appearEnv -> . vsvBeginEnvAppear latexBlock vsvEndEnvAppear
+    (16) hl -> . vsvHighlight
+    (17) correct -> . vsvCorrect
+    (18) list -> . vsvListBeginItemize latexString listBody vsvListEndItemize
+    (19) list -> . vsvListBeginEnumerate latexString listBody vsvListEndEnumerate
+    (20) list -> . vsvListBeginDescription latexString listBody vsvListEndDescription
+
+    $end            reduce using rule 8 (latexBlock -> .)
+    vsvEndEnvAppear reduce using rule 8 (latexBlock -> .)
+    vsvEndEnvGrey   reduce using rule 8 (latexBlock -> .)
+    vsvItem         reduce using rule 8 (latexBlock -> .)
+    vsvListEndEnumerate reduce using rule 8 (latexBlock -> .)
+    vsvListEndItemize reduce using rule 8 (latexBlock -> .)
+    vsvListEndDescription reduce using rule 8 (latexBlock -> .)
+    STRING          shift and go to state 10
+    WHITESPACE      shift and go to state 14
+    NEWLINE         shift and go to state 6
+    vsvBeginEnvGrey shift and go to state 5
+    vsvBeginEnvAppear shift and go to state 3
+    vsvHighlight    shift and go to state 11
+    vsvCorrect      shift and go to state 7
+    vsvListBeginItemize shift and go to state 8
+    vsvListBeginEnumerate shift and go to state 4
+    vsvListBeginDescription shift and go to state 15
+
+    appearEnv                      shift and go to state 1
+    latexString                    shift and go to state 13
+    list                           shift and go to state 16
+    greyEnv                        shift and go to state 2
+    latexBlock                     shift and go to state 26
+    hl                             shift and go to state 12
+    correct                        shift and go to state 17
+
+state 13
+
+    (7) latexBlock -> latexString . latexBlock
+    (7) latexBlock -> . latexString latexBlock
+    (8) latexBlock -> .
+    (9) latexBlock -> . greyEnv latexBlock
+    (10) latexBlock -> . appearEnv latexBlock
+    (11) latexBlock -> . hl latexBlock
+    (12) latexBlock -> . correct latexBlock
+    (13) latexBlock -> . list latexBlock
+    (1) latexString -> . STRING
+    (2) latexString -> . WHITESPACE
+    (3) latexString -> . NEWLINE
+    (4) latexString -> . STRING latexString
+    (5) latexString -> . WHITESPACE latexString
+    (6) latexString -> . NEWLINE latexString
+    (14) greyEnv -> . vsvBeginEnvGrey latexBlock vsvEndEnvGrey
+    (15) appearEnv -> . vsvBeginEnvAppear latexBlock vsvEndEnvAppear
+    (16) hl -> . vsvHighlight
+    (17) correct -> . vsvCorrect
+    (18) list -> . vsvListBeginItemize latexString listBody vsvListEndItemize
+    (19) list -> . vsvListBeginEnumerate latexString listBody vsvListEndEnumerate
+    (20) list -> . vsvListBeginDescription latexString listBody vsvListEndDescription
+
+    $end            reduce using rule 8 (latexBlock -> .)
+    vsvEndEnvAppear reduce using rule 8 (latexBlock -> .)
+    vsvEndEnvGrey   reduce using rule 8 (latexBlock -> .)
+    vsvItem         reduce using rule 8 (latexBlock -> .)
+    vsvListEndEnumerate reduce using rule 8 (latexBlock -> .)
+    vsvListEndItemize reduce using rule 8 (latexBlock -> .)
+    vsvListEndDescription reduce using rule 8 (latexBlock -> .)
+    STRING          shift and go to state 10
+    WHITESPACE      shift and go to state 14
+    NEWLINE         shift and go to state 6
+    vsvBeginEnvGrey shift and go to state 5
+    vsvBeginEnvAppear shift and go to state 3
+    vsvHighlight    shift and go to state 11
+    vsvCorrect      shift and go to state 7
+    vsvListBeginItemize shift and go to state 8
+    vsvListBeginEnumerate shift and go to state 4
+    vsvListBeginDescription shift and go to state 15
+
+    appearEnv                      shift and go to state 1
+    latexString                    shift and go to state 13
+    list                           shift and go to state 16
+    greyEnv                        shift and go to state 2
+    latexBlock                     shift and go to state 27
+    hl                             shift and go to state 12
+    correct                        shift and go to state 17
+
+state 14
+
+    (2) latexString -> WHITESPACE .
+    (5) latexString -> WHITESPACE . latexString
+    (1) latexString -> . STRING
+    (2) latexString -> . WHITESPACE
+    (3) latexString -> . NEWLINE
+    (4) latexString -> . STRING latexString
+    (5) latexString -> . WHITESPACE latexString
+    (6) latexString -> . NEWLINE latexString
+
+  ! shift/reduce conflict for STRING resolved as shift
+  ! shift/reduce conflict for WHITESPACE resolved as shift
+  ! shift/reduce conflict for NEWLINE resolved as shift
+    vsvBeginEnvGrey reduce using rule 2 (latexString -> WHITESPACE .)
+    vsvBeginEnvAppear reduce using rule 2 (latexString -> WHITESPACE .)
+    vsvHighlight    reduce using rule 2 (latexString -> WHITESPACE .)
+    vsvCorrect      reduce using rule 2 (latexString -> WHITESPACE .)
+    vsvListBeginItemize reduce using rule 2 (latexString -> WHITESPACE .)
+    vsvListBeginEnumerate reduce using rule 2 (latexString -> WHITESPACE .)
+    vsvListBeginDescription reduce using rule 2 (latexString -> WHITESPACE .)
+    $end            reduce using rule 2 (latexString -> WHITESPACE .)
+    vsvEndEnvAppear reduce using rule 2 (latexString -> WHITESPACE .)
+    vsvEndEnvGrey   reduce using rule 2 (latexString -> WHITESPACE .)
+    vsvItem         reduce using rule 2 (latexString -> WHITESPACE .)
+    vsvListEndEnumerate reduce using rule 2 (latexString -> WHITESPACE .)
+    vsvListEndItemize reduce using rule 2 (latexString -> WHITESPACE .)
+    vsvListEndDescription reduce using rule 2 (latexString -> WHITESPACE .)
+    STRING          shift and go to state 10
+    WHITESPACE      shift and go to state 14
+    NEWLINE         shift and go to state 6
+
+  ! STRING          [ reduce using rule 2 (latexString -> WHITESPACE .) ]
+  ! WHITESPACE      [ reduce using rule 2 (latexString -> WHITESPACE .) ]
+  ! NEWLINE         [ reduce using rule 2 (latexString -> WHITESPACE .) ]
+
+    latexString                    shift and go to state 28
+
+state 15
+
+    (20) list -> vsvListBeginDescription . latexString listBody vsvListEndDescription
+    (1) latexString -> . STRING
+    (2) latexString -> . WHITESPACE
+    (3) latexString -> . NEWLINE
+    (4) latexString -> . STRING latexString
+    (5) latexString -> . WHITESPACE latexString
+    (6) latexString -> . NEWLINE latexString
+
+    STRING          shift and go to state 10
+    WHITESPACE      shift and go to state 14
+    NEWLINE         shift and go to state 6
+
+    latexString                    shift and go to state 29
+
+state 16
+
+    (13) latexBlock -> list . latexBlock
+    (7) latexBlock -> . latexString latexBlock
+    (8) latexBlock -> .
+    (9) latexBlock -> . greyEnv latexBlock
+    (10) latexBlock -> . appearEnv latexBlock
+    (11) latexBlock -> . hl latexBlock
+    (12) latexBlock -> . correct latexBlock
+    (13) latexBlock -> . list latexBlock
+    (1) latexString -> . STRING
+    (2) latexString -> . WHITESPACE
+    (3) latexString -> . NEWLINE
+    (4) latexString -> . STRING latexString
+    (5) latexString -> . WHITESPACE latexString
+    (6) latexString -> . NEWLINE latexString
+    (14) greyEnv -> . vsvBeginEnvGrey latexBlock vsvEndEnvGrey
+    (15) appearEnv -> . vsvBeginEnvAppear latexBlock vsvEndEnvAppear
+    (16) hl -> . vsvHighlight
+    (17) correct -> . vsvCorrect
+    (18) list -> . vsvListBeginItemize latexString listBody vsvListEndItemize
+    (19) list -> . vsvListBeginEnumerate latexString listBody vsvListEndEnumerate
+    (20) list -> . vsvListBeginDescription latexString listBody vsvListEndDescription
+
+    $end            reduce using rule 8 (latexBlock -> .)
+    vsvEndEnvAppear reduce using rule 8 (latexBlock -> .)
+    vsvEndEnvGrey   reduce using rule 8 (latexBlock -> .)
+    vsvItem         reduce using rule 8 (latexBlock -> .)
+    vsvListEndEnumerate reduce using rule 8 (latexBlock -> .)
+    vsvListEndItemize reduce using rule 8 (latexBlock -> .)
+    vsvListEndDescription reduce using rule 8 (latexBlock -> .)
+    STRING          shift and go to state 10
+    WHITESPACE      shift and go to state 14
+    NEWLINE         shift and go to state 6
+    vsvBeginEnvGrey shift and go to state 5
+    vsvBeginEnvAppear shift and go to state 3
+    vsvHighlight    shift and go to state 11
+    vsvCorrect      shift and go to state 7
+    vsvListBeginItemize shift and go to state 8
+    vsvListBeginEnumerate shift and go to state 4
+    vsvListBeginDescription shift and go to state 15
+
+    appearEnv                      shift and go to state 1
+    latexString                    shift and go to state 13
+    list                           shift and go to state 16
+    greyEnv                        shift and go to state 2
+    correct                        shift and go to state 17
+    hl                             shift and go to state 12
+    latexBlock                     shift and go to state 30
+
+state 17
+
+    (12) latexBlock -> correct . latexBlock
+    (7) latexBlock -> . latexString latexBlock
+    (8) latexBlock -> .
+    (9) latexBlock -> . greyEnv latexBlock
+    (10) latexBlock -> . appearEnv latexBlock
+    (11) latexBlock -> . hl latexBlock
+    (12) latexBlock -> . correct latexBlock
+    (13) latexBlock -> . list latexBlock
+    (1) latexString -> . STRING
+    (2) latexString -> . WHITESPACE
+    (3) latexString -> . NEWLINE
+    (4) latexString -> . STRING latexString
+    (5) latexString -> . WHITESPACE latexString
+    (6) latexString -> . NEWLINE latexString
+    (14) greyEnv -> . vsvBeginEnvGrey latexBlock vsvEndEnvGrey
+    (15) appearEnv -> . vsvBeginEnvAppear latexBlock vsvEndEnvAppear
+    (16) hl -> . vsvHighlight
+    (17) correct -> . vsvCorrect
+    (18) list -> . vsvListBeginItemize latexString listBody vsvListEndItemize
+    (19) list -> . vsvListBeginEnumerate latexString listBody vsvListEndEnumerate
+    (20) list -> . vsvListBeginDescription latexString listBody vsvListEndDescription
+
+    $end            reduce using rule 8 (latexBlock -> .)
+    vsvEndEnvAppear reduce using rule 8 (latexBlock -> .)
+    vsvEndEnvGrey   reduce using rule 8 (latexBlock -> .)
+    vsvItem         reduce using rule 8 (latexBlock -> .)
+    vsvListEndEnumerate reduce using rule 8 (latexBlock -> .)
+    vsvListEndItemize reduce using rule 8 (latexBlock -> .)
+    vsvListEndDescription reduce using rule 8 (latexBlock -> .)
+    STRING          shift and go to state 10
+    WHITESPACE      shift and go to state 14
+    NEWLINE         shift and go to state 6
+    vsvBeginEnvGrey shift and go to state 5
+    vsvBeginEnvAppear shift and go to state 3
+    vsvHighlight    shift and go to state 11
+    vsvCorrect      shift and go to state 7
+    vsvListBeginItemize shift and go to state 8
+    vsvListBeginEnumerate shift and go to state 4
+    vsvListBeginDescription shift and go to state 15
+
+    appearEnv                      shift and go to state 1
+    latexString                    shift and go to state 13
+    list                           shift and go to state 16
+    greyEnv                        shift and go to state 2
+    latexBlock                     shift and go to state 31
+    hl                             shift and go to state 12
+    correct                        shift and go to state 17
+
+state 18
+
+    (10) latexBlock -> appearEnv latexBlock .
+
+    $end            reduce using rule 10 (latexBlock -> appearEnv latexBlock .)
+    vsvEndEnvAppear reduce using rule 10 (latexBlock -> appearEnv latexBlock .)
+    vsvEndEnvGrey   reduce using rule 10 (latexBlock -> appearEnv latexBlock .)
+    vsvItem         reduce using rule 10 (latexBlock -> appearEnv latexBlock .)
+    vsvListEndEnumerate reduce using rule 10 (latexBlock -> appearEnv latexBlock .)
+    vsvListEndItemize reduce using rule 10 (latexBlock -> appearEnv latexBlock .)
+    vsvListEndDescription reduce using rule 10 (latexBlock -> appearEnv latexBlock .)
+
+
+state 19
+
+    (9) latexBlock -> greyEnv latexBlock .
+
+    $end            reduce using rule 9 (latexBlock -> greyEnv latexBlock .)
+    vsvEndEnvAppear reduce using rule 9 (latexBlock -> greyEnv latexBlock .)
+    vsvEndEnvGrey   reduce using rule 9 (latexBlock -> greyEnv latexBlock .)
+    vsvItem         reduce using rule 9 (latexBlock -> greyEnv latexBlock .)
+    vsvListEndEnumerate reduce using rule 9 (latexBlock -> greyEnv latexBlock .)
+    vsvListEndItemize reduce using rule 9 (latexBlock -> greyEnv latexBlock .)
+    vsvListEndDescription reduce using rule 9 (latexBlock -> greyEnv latexBlock .)
+
+
+state 20
+
+    (15) appearEnv -> vsvBeginEnvAppear latexBlock . vsvEndEnvAppear
+
+    vsvEndEnvAppear shift and go to state 32
+
+
+state 21
+
+    (19) list -> vsvListBeginEnumerate latexString . listBody vsvListEndEnumerate
+    (21) listBody -> .
+    (22) listBody -> . vsvItem latexBlock listBody
+
+    vsvListEndEnumerate reduce using rule 21 (listBody -> .)
+    vsvItem         shift and go to state 34
+
+    listBody                       shift and go to state 33
+
+state 22
+
+    (14) greyEnv -> vsvBeginEnvGrey latexBlock . vsvEndEnvGrey
+
+    vsvEndEnvGrey   shift and go to state 35
+
+
+state 23
+
+    (6) latexString -> NEWLINE latexString .
+
+    STRING          reduce using rule 6 (latexString -> NEWLINE latexString .)
+    WHITESPACE      reduce using rule 6 (latexString -> NEWLINE latexString .)
+    NEWLINE         reduce using rule 6 (latexString -> NEWLINE latexString .)
+    vsvBeginEnvGrey reduce using rule 6 (latexString -> NEWLINE latexString .)
+    vsvBeginEnvAppear reduce using rule 6 (latexString -> NEWLINE latexString .)
+    vsvHighlight    reduce using rule 6 (latexString -> NEWLINE latexString .)
+    vsvCorrect      reduce using rule 6 (latexString -> NEWLINE latexString .)
+    vsvListBeginItemize reduce using rule 6 (latexString -> NEWLINE latexString .)
+    vsvListBeginEnumerate reduce using rule 6 (latexString -> NEWLINE latexString .)
+    vsvListBeginDescription reduce using rule 6 (latexString -> NEWLINE latexString .)
+    $end            reduce using rule 6 (latexString -> NEWLINE latexString .)
+    vsvEndEnvAppear reduce using rule 6 (latexString -> NEWLINE latexString .)
+    vsvEndEnvGrey   reduce using rule 6 (latexString -> NEWLINE latexString .)
+    vsvItem         reduce using rule 6 (latexString -> NEWLINE latexString .)
+    vsvListEndEnumerate reduce using rule 6 (latexString -> NEWLINE latexString .)
+    vsvListEndItemize reduce using rule 6 (latexString -> NEWLINE latexString .)
+    vsvListEndDescription reduce using rule 6 (latexString -> NEWLINE latexString .)
+
+
+state 24
+
+    (18) list -> vsvListBeginItemize latexString . listBody vsvListEndItemize
+    (21) listBody -> .
+    (22) listBody -> . vsvItem latexBlock listBody
+
+    vsvListEndItemize reduce using rule 21 (listBody -> .)
+    vsvItem         shift and go to state 34
+
+    listBody                       shift and go to state 36
+
+state 25
+
+    (4) latexString -> STRING latexString .
+
+    STRING          reduce using rule 4 (latexString -> STRING latexString .)
+    WHITESPACE      reduce using rule 4 (latexString -> STRING latexString .)
+    NEWLINE         reduce using rule 4 (latexString -> STRING latexString .)
+    vsvBeginEnvGrey reduce using rule 4 (latexString -> STRING latexString .)
+    vsvBeginEnvAppear reduce using rule 4 (latexString -> STRING latexString .)
+    vsvHighlight    reduce using rule 4 (latexString -> STRING latexString .)
+    vsvCorrect      reduce using rule 4 (latexString -> STRING latexString .)
+    vsvListBeginItemize reduce using rule 4 (latexString -> STRING latexString .)
+    vsvListBeginEnumerate reduce using rule 4 (latexString -> STRING latexString .)
+    vsvListBeginDescription reduce using rule 4 (latexString -> STRING latexString .)
+    $end            reduce using rule 4 (latexString -> STRING latexString .)
+    vsvEndEnvAppear reduce using rule 4 (latexString -> STRING latexString .)
+    vsvEndEnvGrey   reduce using rule 4 (latexString -> STRING latexString .)
+    vsvItem         reduce using rule 4 (latexString -> STRING latexString .)
+    vsvListEndEnumerate reduce using rule 4 (latexString -> STRING latexString .)
+    vsvListEndItemize reduce using rule 4 (latexString -> STRING latexString .)
+    vsvListEndDescription reduce using rule 4 (latexString -> STRING latexString .)
+
+
+state 26
+
+    (11) latexBlock -> hl latexBlock .
+
+    $end            reduce using rule 11 (latexBlock -> hl latexBlock .)
+    vsvEndEnvAppear reduce using rule 11 (latexBlock -> hl latexBlock .)
+    vsvEndEnvGrey   reduce using rule 11 (latexBlock -> hl latexBlock .)
+    vsvItem         reduce using rule 11 (latexBlock -> hl latexBlock .)
+    vsvListEndEnumerate reduce using rule 11 (latexBlock -> hl latexBlock .)
+    vsvListEndItemize reduce using rule 11 (latexBlock -> hl latexBlock .)
+    vsvListEndDescription reduce using rule 11 (latexBlock -> hl latexBlock .)
+
+
+state 27
+
+    (7) latexBlock -> latexString latexBlock .
+
+    $end            reduce using rule 7 (latexBlock -> latexString latexBlock .)
+    vsvEndEnvAppear reduce using rule 7 (latexBlock -> latexString latexBlock .)
+    vsvEndEnvGrey   reduce using rule 7 (latexBlock -> latexString latexBlock .)
+    vsvItem         reduce using rule 7 (latexBlock -> latexString latexBlock .)
+    vsvListEndEnumerate reduce using rule 7 (latexBlock -> latexString latexBlock .)
+    vsvListEndItemize reduce using rule 7 (latexBlock -> latexString latexBlock .)
+    vsvListEndDescription reduce using rule 7 (latexBlock -> latexString latexBlock .)
+
+
+state 28
+
+    (5) latexString -> WHITESPACE latexString .
+
+    STRING          reduce using rule 5 (latexString -> WHITESPACE latexString .)
+    WHITESPACE      reduce using rule 5 (latexString -> WHITESPACE latexString .)
+    NEWLINE         reduce using rule 5 (latexString -> WHITESPACE latexString .)
+    vsvBeginEnvGrey reduce using rule 5 (latexString -> WHITESPACE latexString .)
+    vsvBeginEnvAppear reduce using rule 5 (latexString -> WHITESPACE latexString .)
+    vsvHighlight    reduce using rule 5 (latexString -> WHITESPACE latexString .)
+    vsvCorrect      reduce using rule 5 (latexString -> WHITESPACE latexString .)
+    vsvListBeginItemize reduce using rule 5 (latexString -> WHITESPACE latexString .)
+    vsvListBeginEnumerate reduce using rule 5 (latexString -> WHITESPACE latexString .)
+    vsvListBeginDescription reduce using rule 5 (latexString -> WHITESPACE latexString .)
+    $end            reduce using rule 5 (latexString -> WHITESPACE latexString .)
+    vsvEndEnvAppear reduce using rule 5 (latexString -> WHITESPACE latexString .)
+    vsvEndEnvGrey   reduce using rule 5 (latexString -> WHITESPACE latexString .)
+    vsvItem         reduce using rule 5 (latexString -> WHITESPACE latexString .)
+    vsvListEndEnumerate reduce using rule 5 (latexString -> WHITESPACE latexString .)
+    vsvListEndItemize reduce using rule 5 (latexString -> WHITESPACE latexString .)
+    vsvListEndDescription reduce using rule 5 (latexString -> WHITESPACE latexString .)
+
+
+state 29
+
+    (20) list -> vsvListBeginDescription latexString . listBody vsvListEndDescription
+    (21) listBody -> .
+    (22) listBody -> . vsvItem latexBlock listBody
+
+    vsvListEndDescription reduce using rule 21 (listBody -> .)
+    vsvItem         shift and go to state 34
+
+    listBody                       shift and go to state 37
+
+state 30
+
+    (13) latexBlock -> list latexBlock .
+
+    $end            reduce using rule 13 (latexBlock -> list latexBlock .)
+    vsvEndEnvAppear reduce using rule 13 (latexBlock -> list latexBlock .)
+    vsvEndEnvGrey   reduce using rule 13 (latexBlock -> list latexBlock .)
+    vsvItem         reduce using rule 13 (latexBlock -> list latexBlock .)
+    vsvListEndEnumerate reduce using rule 13 (latexBlock -> list latexBlock .)
+    vsvListEndItemize reduce using rule 13 (latexBlock -> list latexBlock .)
+    vsvListEndDescription reduce using rule 13 (latexBlock -> list latexBlock .)
+
+
+state 31
+
+    (12) latexBlock -> correct latexBlock .
+
+    $end            reduce using rule 12 (latexBlock -> correct latexBlock .)
+    vsvEndEnvAppear reduce using rule 12 (latexBlock -> correct latexBlock .)
+    vsvEndEnvGrey   reduce using rule 12 (latexBlock -> correct latexBlock .)
+    vsvItem         reduce using rule 12 (latexBlock -> correct latexBlock .)
+    vsvListEndEnumerate reduce using rule 12 (latexBlock -> correct latexBlock .)
+    vsvListEndItemize reduce using rule 12 (latexBlock -> correct latexBlock .)
+    vsvListEndDescription reduce using rule 12 (latexBlock -> correct latexBlock .)
+
+
+state 32
+
+    (15) appearEnv -> vsvBeginEnvAppear latexBlock vsvEndEnvAppear .
+
+    STRING          reduce using rule 15 (appearEnv -> vsvBeginEnvAppear latexBlock vsvEndEnvAppear .)
+    WHITESPACE      reduce using rule 15 (appearEnv -> vsvBeginEnvAppear latexBlock vsvEndEnvAppear .)
+    NEWLINE         reduce using rule 15 (appearEnv -> vsvBeginEnvAppear latexBlock vsvEndEnvAppear .)
+    vsvBeginEnvGrey reduce using rule 15 (appearEnv -> vsvBeginEnvAppear latexBlock vsvEndEnvAppear .)
+    vsvBeginEnvAppear reduce using rule 15 (appearEnv -> vsvBeginEnvAppear latexBlock vsvEndEnvAppear .)
+    vsvHighlight    reduce using rule 15 (appearEnv -> vsvBeginEnvAppear latexBlock vsvEndEnvAppear .)
+    vsvCorrect      reduce using rule 15 (appearEnv -> vsvBeginEnvAppear latexBlock vsvEndEnvAppear .)
+    vsvListBeginItemize reduce using rule 15 (appearEnv -> vsvBeginEnvAppear latexBlock vsvEndEnvAppear .)
+    vsvListBeginEnumerate reduce using rule 15 (appearEnv -> vsvBeginEnvAppear latexBlock vsvEndEnvAppear .)
+    vsvListBeginDescription reduce using rule 15 (appearEnv -> vsvBeginEnvAppear latexBlock vsvEndEnvAppear .)
+    $end            reduce using rule 15 (appearEnv -> vsvBeginEnvAppear latexBlock vsvEndEnvAppear .)
+    vsvEndEnvAppear reduce using rule 15 (appearEnv -> vsvBeginEnvAppear latexBlock vsvEndEnvAppear .)
+    vsvEndEnvGrey   reduce using rule 15 (appearEnv -> vsvBeginEnvAppear latexBlock vsvEndEnvAppear .)
+    vsvItem         reduce using rule 15 (appearEnv -> vsvBeginEnvAppear latexBlock vsvEndEnvAppear .)
+    vsvListEndEnumerate reduce using rule 15 (appearEnv -> vsvBeginEnvAppear latexBlock vsvEndEnvAppear .)
+    vsvListEndItemize reduce using rule 15 (appearEnv -> vsvBeginEnvAppear latexBlock vsvEndEnvAppear .)
+    vsvListEndDescription reduce using rule 15 (appearEnv -> vsvBeginEnvAppear latexBlock vsvEndEnvAppear .)
+
+
+state 33
+
+    (19) list -> vsvListBeginEnumerate latexString listBody . vsvListEndEnumerate
+
+    vsvListEndEnumerate shift and go to state 38
+
+
+state 34
+
+    (22) listBody -> vsvItem . latexBlock listBody
+    (7) latexBlock -> . latexString latexBlock
+    (8) latexBlock -> .
+    (9) latexBlock -> . greyEnv latexBlock
+    (10) latexBlock -> . appearEnv latexBlock
+    (11) latexBlock -> . hl latexBlock
+    (12) latexBlock -> . correct latexBlock
+    (13) latexBlock -> . list latexBlock
+    (1) latexString -> . STRING
+    (2) latexString -> . WHITESPACE
+    (3) latexString -> . NEWLINE
+    (4) latexString -> . STRING latexString
+    (5) latexString -> . WHITESPACE latexString
+    (6) latexString -> . NEWLINE latexString
+    (14) greyEnv -> . vsvBeginEnvGrey latexBlock vsvEndEnvGrey
+    (15) appearEnv -> . vsvBeginEnvAppear latexBlock vsvEndEnvAppear
+    (16) hl -> . vsvHighlight
+    (17) correct -> . vsvCorrect
+    (18) list -> . vsvListBeginItemize latexString listBody vsvListEndItemize
+    (19) list -> . vsvListBeginEnumerate latexString listBody vsvListEndEnumerate
+    (20) list -> . vsvListBeginDescription latexString listBody vsvListEndDescription
+
+    vsvItem         reduce using rule 8 (latexBlock -> .)
+    vsvListEndEnumerate reduce using rule 8 (latexBlock -> .)
+    vsvListEndItemize reduce using rule 8 (latexBlock -> .)
+    vsvListEndDescription reduce using rule 8 (latexBlock -> .)
+    STRING          shift and go to state 10
+    WHITESPACE      shift and go to state 14
+    NEWLINE         shift and go to state 6
+    vsvBeginEnvGrey shift and go to state 5
+    vsvBeginEnvAppear shift and go to state 3
+    vsvHighlight    shift and go to state 11
+    vsvCorrect      shift and go to state 7
+    vsvListBeginItemize shift and go to state 8
+    vsvListBeginEnumerate shift and go to state 4
+    vsvListBeginDescription shift and go to state 15
+
+    appearEnv                      shift and go to state 1
+    latexString                    shift and go to state 13
+    list                           shift and go to state 16
+    greyEnv                        shift and go to state 2
+    correct                        shift and go to state 17
+    hl                             shift and go to state 12
+    latexBlock                     shift and go to state 39
+
+state 35
+
+    (14) greyEnv -> vsvBeginEnvGrey latexBlock vsvEndEnvGrey .
+
+    STRING          reduce using rule 14 (greyEnv -> vsvBeginEnvGrey latexBlock vsvEndEnvGrey .)
+    WHITESPACE      reduce using rule 14 (greyEnv -> vsvBeginEnvGrey latexBlock vsvEndEnvGrey .)
+    NEWLINE         reduce using rule 14 (greyEnv -> vsvBeginEnvGrey latexBlock vsvEndEnvGrey .)
+    vsvBeginEnvGrey reduce using rule 14 (greyEnv -> vsvBeginEnvGrey latexBlock vsvEndEnvGrey .)
+    vsvBeginEnvAppear reduce using rule 14 (greyEnv -> vsvBeginEnvGrey latexBlock vsvEndEnvGrey .)
+    vsvHighlight    reduce using rule 14 (greyEnv -> vsvBeginEnvGrey latexBlock vsvEndEnvGrey .)
+    vsvCorrect      reduce using rule 14 (greyEnv -> vsvBeginEnvGrey latexBlock vsvEndEnvGrey .)
+    vsvListBeginItemize reduce using rule 14 (greyEnv -> vsvBeginEnvGrey latexBlock vsvEndEnvGrey .)
+    vsvListBeginEnumerate reduce using rule 14 (greyEnv -> vsvBeginEnvGrey latexBlock vsvEndEnvGrey .)
+    vsvListBeginDescription reduce using rule 14 (greyEnv -> vsvBeginEnvGrey latexBlock vsvEndEnvGrey .)
+    $end            reduce using rule 14 (greyEnv -> vsvBeginEnvGrey latexBlock vsvEndEnvGrey .)
+    vsvEndEnvAppear reduce using rule 14 (greyEnv -> vsvBeginEnvGrey latexBlock vsvEndEnvGrey .)
+    vsvEndEnvGrey   reduce using rule 14 (greyEnv -> vsvBeginEnvGrey latexBlock vsvEndEnvGrey .)
+    vsvItem         reduce using rule 14 (greyEnv -> vsvBeginEnvGrey latexBlock vsvEndEnvGrey .)
+    vsvListEndEnumerate reduce using rule 14 (greyEnv -> vsvBeginEnvGrey latexBlock vsvEndEnvGrey .)
+    vsvListEndItemize reduce using rule 14 (greyEnv -> vsvBeginEnvGrey latexBlock vsvEndEnvGrey .)
+    vsvListEndDescription reduce using rule 14 (greyEnv -> vsvBeginEnvGrey latexBlock vsvEndEnvGrey .)
+
+
+state 36
+
+    (18) list -> vsvListBeginItemize latexString listBody . vsvListEndItemize
+
+    vsvListEndItemize shift and go to state 40
+
+
+state 37
+
+    (20) list -> vsvListBeginDescription latexString listBody . vsvListEndDescription
+
+    vsvListEndDescription shift and go to state 41
+
+
+state 38
+
+    (19) list -> vsvListBeginEnumerate latexString listBody vsvListEndEnumerate .
+
+    STRING          reduce using rule 19 (list -> vsvListBeginEnumerate latexString listBody vsvListEndEnumerate .)
+    WHITESPACE      reduce using rule 19 (list -> vsvListBeginEnumerate latexString listBody vsvListEndEnumerate .)
+    NEWLINE         reduce using rule 19 (list -> vsvListBeginEnumerate latexString listBody vsvListEndEnumerate .)
+    vsvBeginEnvGrey reduce using rule 19 (list -> vsvListBeginEnumerate latexString listBody vsvListEndEnumerate .)
+    vsvBeginEnvAppear reduce using rule 19 (list -> vsvListBeginEnumerate latexString listBody vsvListEndEnumerate .)
+    vsvHighlight    reduce using rule 19 (list -> vsvListBeginEnumerate latexString listBody vsvListEndEnumerate .)
+    vsvCorrect      reduce using rule 19 (list -> vsvListBeginEnumerate latexString listBody vsvListEndEnumerate .)
+    vsvListBeginItemize reduce using rule 19 (list -> vsvListBeginEnumerate latexString listBody vsvListEndEnumerate .)
+    vsvListBeginEnumerate reduce using rule 19 (list -> vsvListBeginEnumerate latexString listBody vsvListEndEnumerate .)
+    vsvListBeginDescription reduce using rule 19 (list -> vsvListBeginEnumerate latexString listBody vsvListEndEnumerate .)
+    $end            reduce using rule 19 (list -> vsvListBeginEnumerate latexString listBody vsvListEndEnumerate .)
+    vsvEndEnvAppear reduce using rule 19 (list -> vsvListBeginEnumerate latexString listBody vsvListEndEnumerate .)
+    vsvEndEnvGrey   reduce using rule 19 (list -> vsvListBeginEnumerate latexString listBody vsvListEndEnumerate .)
+    vsvItem         reduce using rule 19 (list -> vsvListBeginEnumerate latexString listBody vsvListEndEnumerate .)
+    vsvListEndEnumerate reduce using rule 19 (list -> vsvListBeginEnumerate latexString listBody vsvListEndEnumerate .)
+    vsvListEndItemize reduce using rule 19 (list -> vsvListBeginEnumerate latexString listBody vsvListEndEnumerate .)
+    vsvListEndDescription reduce using rule 19 (list -> vsvListBeginEnumerate latexString listBody vsvListEndEnumerate .)
+
+
+state 39
+
+    (22) listBody -> vsvItem latexBlock . listBody
+    (21) listBody -> .
+    (22) listBody -> . vsvItem latexBlock listBody
+
+    vsvListEndEnumerate reduce using rule 21 (listBody -> .)
+    vsvListEndItemize reduce using rule 21 (listBody -> .)
+    vsvListEndDescription reduce using rule 21 (listBody -> .)
+    vsvItem         shift and go to state 34
+
+    listBody                       shift and go to state 42
+
+state 40
+
+    (18) list -> vsvListBeginItemize latexString listBody vsvListEndItemize .
+
+    STRING          reduce using rule 18 (list -> vsvListBeginItemize latexString listBody vsvListEndItemize .)
+    WHITESPACE      reduce using rule 18 (list -> vsvListBeginItemize latexString listBody vsvListEndItemize .)
+    NEWLINE         reduce using rule 18 (list -> vsvListBeginItemize latexString listBody vsvListEndItemize .)
+    vsvBeginEnvGrey reduce using rule 18 (list -> vsvListBeginItemize latexString listBody vsvListEndItemize .)
+    vsvBeginEnvAppear reduce using rule 18 (list -> vsvListBeginItemize latexString listBody vsvListEndItemize .)
+    vsvHighlight    reduce using rule 18 (list -> vsvListBeginItemize latexString listBody vsvListEndItemize .)
+    vsvCorrect      reduce using rule 18 (list -> vsvListBeginItemize latexString listBody vsvListEndItemize .)
+    vsvListBeginItemize reduce using rule 18 (list -> vsvListBeginItemize latexString listBody vsvListEndItemize .)
+    vsvListBeginEnumerate reduce using rule 18 (list -> vsvListBeginItemize latexString listBody vsvListEndItemize .)
+    vsvListBeginDescription reduce using rule 18 (list -> vsvListBeginItemize latexString listBody vsvListEndItemize .)
+    $end            reduce using rule 18 (list -> vsvListBeginItemize latexString listBody vsvListEndItemize .)
+    vsvEndEnvAppear reduce using rule 18 (list -> vsvListBeginItemize latexString listBody vsvListEndItemize .)
+    vsvEndEnvGrey   reduce using rule 18 (list -> vsvListBeginItemize latexString listBody vsvListEndItemize .)
+    vsvItem         reduce using rule 18 (list -> vsvListBeginItemize latexString listBody vsvListEndItemize .)
+    vsvListEndEnumerate reduce using rule 18 (list -> vsvListBeginItemize latexString listBody vsvListEndItemize .)
+    vsvListEndItemize reduce using rule 18 (list -> vsvListBeginItemize latexString listBody vsvListEndItemize .)
+    vsvListEndDescription reduce using rule 18 (list -> vsvListBeginItemize latexString listBody vsvListEndItemize .)
+
+
+state 41
+
+    (20) list -> vsvListBeginDescription latexString listBody vsvListEndDescription .
+
+    STRING          reduce using rule 20 (list -> vsvListBeginDescription latexString listBody vsvListEndDescription .)
+    WHITESPACE      reduce using rule 20 (list -> vsvListBeginDescription latexString listBody vsvListEndDescription .)
+    NEWLINE         reduce using rule 20 (list -> vsvListBeginDescription latexString listBody vsvListEndDescription .)
+    vsvBeginEnvGrey reduce using rule 20 (list -> vsvListBeginDescription latexString listBody vsvListEndDescription .)
+    vsvBeginEnvAppear reduce using rule 20 (list -> vsvListBeginDescription latexString listBody vsvListEndDescription .)
+    vsvHighlight    reduce using rule 20 (list -> vsvListBeginDescription latexString listBody vsvListEndDescription .)
+    vsvCorrect      reduce using rule 20 (list -> vsvListBeginDescription latexString listBody vsvListEndDescription .)
+    vsvListBeginItemize reduce using rule 20 (list -> vsvListBeginDescription latexString listBody vsvListEndDescription .)
+    vsvListBeginEnumerate reduce using rule 20 (list -> vsvListBeginDescription latexString listBody vsvListEndDescription .)
+    vsvListBeginDescription reduce using rule 20 (list -> vsvListBeginDescription latexString listBody vsvListEndDescription .)
+    $end            reduce using rule 20 (list -> vsvListBeginDescription latexString listBody vsvListEndDescription .)
+    vsvEndEnvAppear reduce using rule 20 (list -> vsvListBeginDescription latexString listBody vsvListEndDescription .)
+    vsvEndEnvGrey   reduce using rule 20 (list -> vsvListBeginDescription latexString listBody vsvListEndDescription .)
+    vsvItem         reduce using rule 20 (list -> vsvListBeginDescription latexString listBody vsvListEndDescription .)
+    vsvListEndEnumerate reduce using rule 20 (list -> vsvListBeginDescription latexString listBody vsvListEndDescription .)
+    vsvListEndItemize reduce using rule 20 (list -> vsvListBeginDescription latexString listBody vsvListEndDescription .)
+    vsvListEndDescription reduce using rule 20 (list -> vsvListBeginDescription latexString listBody vsvListEndDescription .)
+
+
+state 42
+
+    (22) listBody -> vsvItem latexBlock listBody .
+
+    vsvListEndEnumerate reduce using rule 22 (listBody -> vsvItem latexBlock listBody .)
+    vsvListEndDescription reduce using rule 22 (listBody -> vsvItem latexBlock listBody .)
+    vsvListEndItemize reduce using rule 22 (listBody -> vsvItem latexBlock listBody .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for STRING in state 6 resolved as shift
+WARNING: shift/reduce conflict for WHITESPACE in state 6 resolved as shift
+WARNING: shift/reduce conflict for NEWLINE in state 6 resolved as shift
+WARNING: shift/reduce conflict for STRING in state 10 resolved as shift
+WARNING: shift/reduce conflict for WHITESPACE in state 10 resolved as shift
+WARNING: shift/reduce conflict for NEWLINE in state 10 resolved as shift
+WARNING: shift/reduce conflict for STRING in state 14 resolved as shift
+WARNING: shift/reduce conflict for WHITESPACE in state 14 resolved as shift
+WARNING: shift/reduce conflict for NEWLINE in state 14 resolved as shift
