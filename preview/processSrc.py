@@ -62,8 +62,8 @@ if __name__ == '__main__':
         fileParts = filePattern.match(frameFile).groups()
         if (fileParts is None):
             raise InvalidTmpFileError(frameFile)
-        frameStartTime = fileParts[0]
-        frameEndTime   = fileParts[1]
+        frameStartTime = Timecode(fileParts[0])
+        frameEndTime   = Timecode(fileParts[1])
         frameType      = fileParts[2]
         texSrc = None
         thisFrame  = None
@@ -98,8 +98,8 @@ if __name__ == '__main__':
             pass
         
         frame.timecodeList = list(lexer.timecodeSet)
-        frame.timecodeList.append(Timecode(frame.startTime))
-        frame.timecodeList.append(Timecode(frame.endTime))
+        frame.timecodeList.append(frame.startTime)
+        frame.timecodeList.append(frame.endTime)
         frame.timecodeList.sort()
     
     
