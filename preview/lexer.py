@@ -8,7 +8,7 @@ import ply.lex as lex
 import globaldecs as globals
 import re
 from preview import Actions
-from Timecode import Timecode, MAX_MINS
+from Timecode import Timecode
 
 startTimecode = 0
 
@@ -60,11 +60,18 @@ t_STRING = r'\S+'
 # methods for other tokens
 def t_vsvBeginEnvGrey(t):
     #r'\\begin\{vsvgrey\}\{[\d-:]+\}{[\d-:]+\}'
-    r'\\begin\{vsvgrey\}\{[\d\-:\.]+\}\{[\d\-:\.]+\}'
-    times = re.findall('[\d\-:\.]+', t.value)
-    startTime = Timecode(times[0])
-    endTime = Timecode(times[1])
-    # TODO: call validate timecode method
+    r'\\begin\{vsvgrey\}\{[\d\-:\.]*\}\{[\d\-:\.]*\}'
+    times = re.findall('\{([\d\-:\.]*)\}', t.value)
+    if (times[0] == ""):
+        startTime = lexer.startTimecode
+    else:
+        startTime = Timecode(times[0])
+    assert(startTime is not None)
+    if (times[1] == ""):
+        endTime = lexer.endTimecode
+    else:
+        endTime = Timecode(times[1])
+    assert(endTime is not None)
     t.lexer.timecodeSet.add(startTime)
     t.lexer.timecodeSet.add(endTime)
     t.value = Actions.GreyAction(startTime,endTime)
@@ -72,10 +79,18 @@ def t_vsvBeginEnvGrey(t):
 
 def t_vsvBeginEnvAppear(t):
     r'\\begin\{vsvappear\}\{[\d\-:\.]+\}\{[\d\-:\.]+\}'
-    times = re.findall('[\d\-:\.]+', t.value)
-    startTime = Timecode(times[0])
-    endTime = Timecode(times[1])
-    # TODO: call validate timecode method
+    #times = re.findall('[\d\-:\.]+', t.value)
+    times = re.findall('\{([\d\-:\.]*)\}', t.value)
+    if (times[0] == ""):
+        startTime = lexer.startTimecode
+    else:
+        startTime = Timecode(times[0])
+    assert(startTime is not None)
+    if (times[1] == ""):
+        endTime = lexer.endTimecode
+    else:
+        endTime = Timecode(times[1])
+    assert(endTime is not None)
     t.lexer.timecodeSet.add(startTime)
     t.lexer.timecodeSet.add(endTime)
     t.value = Actions.AppearAction(startTime,endTime)
@@ -83,9 +98,18 @@ def t_vsvBeginEnvAppear(t):
 
 def t_vsvHighlight(t):
     r'\\vsvhl\{[\d\-:\.]+\}\{[\d\-:\.]+\}'
-    times = re.findall('[\d\-:\.]+', t.value)
-    startTime = Timecode(times[0])
-    endTime = Timecode(times[1])
+    #times = re.findall('[\d\-:\.]+', t.value)
+    times = re.findall('\{([\d\-:\.]*)\}', t.value)
+    if (times[0] == ""):
+        startTime = lexer.startTimecode
+    else:
+        startTime = Timecode(times[0])
+    assert(startTime is not None)
+    if (times[1] == ""):
+        endTime = lexer.endTimecode
+    else:
+        endTime = Timecode(times[1])
+    assert(endTime is not None)
     t.lexer.timecodeSet.add(startTime)
     t.lexer.timecodeSet.add(endTime)
     t.value = Actions.HighlightAction(startTime,endTime)
@@ -93,9 +117,18 @@ def t_vsvHighlight(t):
 
 def t_vsvCorrect(t):
     r'\\vsvcorrect\{[\d\-:\.]+\}\{[\d\-:\.]+\}'
-    times = re.findall('[\d\-:\.]+', t.value)
-    startTime = Timecode(times[0])
-    endTime = Timecode(times[1])
+    #times = re.findall('[\d\-:\.]+', t.value)
+    times = re.findall('\{([\d\-:\.]*)\}', t.value)
+    if (times[0] == ""):
+        startTime = lexer.startTimecode
+    else:
+        startTime = Timecode(times[0])
+    assert(startTime is not None)
+    if (times[1] == ""):
+        endTime = lexer.endTimecode
+    else:
+        endTime = Timecode(times[1])
+    assert(endTime is not None)
     t.lexer.timecodeSet.add(startTime)
     t.lexer.timecodeSet.add(endTime)
     t.value = Actions.CorrectAction(startTime,endTime)
@@ -105,9 +138,20 @@ def t_vsvItem(t):
     r'\\vsvitem\{[\d\-:\.]*\}\{[\d\-:\.]*\}\{(grey|appear|)\}'
 #    r'\\vsvitem'
     times = re.findall('[\d\-:\.]+', t.value)
-    if (len(times) > 0):
-        startTime = Timecode(times[0])
-        endTime = Timecode(times[1])
+    if (len(times) > 0):                           # TODO tidy this up
+        times = re.findall('\{([\d\-:\.]*)\}', t.value)
+        if (times[0] == ""):
+            startTime = lexer.startTimecode
+        else:
+            startTime = Timecode(times[0])
+        assert(startTime is not None)
+        if (times[1] == ""):
+            endTime = lexer.endTimecode
+        else:
+            endTime = Timecode(times[1])
+        assert(endTime is not None)
+        #startTime = Timecode(times[0])
+        #endTime = Timecode(times[1])
         t.lexer.timecodeSet.add(startTime)
         t.lexer.timecodeSet.add(endTime)
     else:
@@ -147,21 +191,14 @@ def validateNonEmptyTimecode(timecode):
         raise InvalidTimecodeError(timecode)
     if (len(timecodeParts) < 3):
         raise InvalidTimecodeError(timecode)
-    segment = timecodeParts[0]
-    mins = timecodeParts[1]
-    secs = timecodeParts[2]
-    partSecs = timecodeParts[3]
-    if (segment>lexer.largestSegment):
-        if (segment>(lexer.largestSegment+1)):
+
+
+def validateSegmentNumber(timecode):
+    if (timecode.segment>lexer.largestSegment):
+        if (timecode.segment>(lexer.largestSegment+1)):
             raise InvalidTimecodeError(timecode)
         else:
-            lexer.largestSegment = segment
-    if (mins<0 | mins>MAX_MINS):
-        raise InvalidTimecodeError(timecode)
-    if (secs<0 | secs>59):
-        raise InvalidTimecodeError(timecode)
-    if (partSecs<0 | partSecs>99):
-        raise InvalidTimecodeError(timecode)
+            lexer.largestSegment = timecode.segment
     
     
 
