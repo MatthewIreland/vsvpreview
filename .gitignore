@@ -1,0 +1,9 @@
+*~
+tmp
+*.pyc
+*.pyx
+*.out
+preview/compile_frames.sh
+preview/remove_empty_lists.pl
+preview/strip_comments.pl
+preview/split_frames.pl

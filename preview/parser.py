@@ -81,17 +81,15 @@ def p_greyEnv(p):
         p.parser.colourVariableCounter = int(0)
     
     
-    print "Current time is " + str(p.parser.currentTime)
-    print "Start time is " + str(p[1].startTime)
-    print "End time is " + str(p[1].endTime)
-    print str((p[1].startTime < p.parser.currentTime) and (p[1].endTime > p.parser.currentTime))
+#    print "Current time is " + str(p.parser.currentTime)
+#    print "Start time is " + str(p[1].startTime)
+#    print "End time is " + str(p[1].endTime)
+#    print str((p[1].startTime < p.parser.currentTime) and (p[1].endTime > p.parser.currentTime))
     
     if ((p[1].startTime <= p.parser.currentTime) and (p[1].endTime > p.parser.currentTime)):
-        print "Is in time"
         p[0] = '\colorlet{oldcolour'+str(p.parser.colourVariableCounter)+'}{.}\\color{gray}'+p[2]+'\color{oldcolour'+str(p.parser.colourVariableCounter)+'}'
         p.parser.colourVariableCounter += 1
     else:
-        print "Is not in time"
         p[0] = p[2]
         
 def p_appearEnv(p):
@@ -105,7 +103,6 @@ def p_appearEnv(p):
 def p_hl(p):
     'hl : vsvHighlight'
     if ((p[1].startTime <= p.parser.currentTime) and (p[1].endTime > p.parser.currentTime)):
-        print "******** in time!!!"
         p[0] = '\\hl'
     else:
         p[0] = ''
@@ -143,16 +140,18 @@ def p_listBody(p):
         p.parser.colourVariableCounter = int(0)
         
     if (isinstance(p[1], Actions.GreyAction)):
-        if (p.parser.isInTime(p[1])):
+        #if (p.parser.isInTime(p[1])):
+        if ((p[1].startTime <= p.parser.currentTime) and (p[1].endTime > p.parser.currentTime)):
             p[0] = '\\item\n\colorlet{oldcolour'+str(p.parser.colourVariableCounter)+'}{.}\\color{gray}'+p[2]+'\color{oldcolour'+str(p.parser.colourVariableCounter)+'}\n'+p[3]
             p.parser.colourVariableCounter += 1
         else:
             p[0] = '\\item' + p[2] + p[3]
     elif (isinstance(p[1], Actions.AppearAction)):
-        if (p.parser.isInTime(p[1])):
+        #if (p.parser.isInTime(p[1])):
+        if ((p[1].startTime <= p.parser.currentTime) and (p[1].endTime > p.parser.currentTime)):
             p[0] = '\\item' + p[2] + p[3]
         else:
-            p[0] = ''
+            p[0] = '' + p[3]
     elif (isinstance(p[1], Actions.EmptyAction)):
         p[0] = '\\item' + p[2] + p[3]
     else:

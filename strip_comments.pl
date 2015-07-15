@@ -11,7 +11,7 @@ my $in_filename = $ARGV[0] or die "No input file $!";
 my $out_filename = $ARGV[1] or die "No output file $!";
 
 open (my $INFH, '<', $in_filename) or die "Could not open '$in_filename' for reading $!";
-open (my $OUTFG, '>', $out_filename) or die "Could not open '$out_filename' for writing $!";
+open (my $OUTFH, '>', $out_filename) or die "Could not open '$out_filename' for writing $!";
 
 while (my $line = <$INFH>) {
     if (!($line =~ /^%.*/)) {

@@ -6,6 +6,8 @@ Created on 11 Jul 2015
 
 import re
 
+MAX_MINS = 100
+
 # TODO: these should really be immutable
 
 class InvalidTimecodeError(Exception):

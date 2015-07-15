@@ -5,44 +5,163 @@ Created on 11 Jul 2015
 '''
 
 import sys
+import os
+import subprocess
+import datetime
 from lexer import *
 from parser import *
 import globaldecs as globals
+from FrameInput import *
+
+class InvalidTmpFileError(Exception):
+    def __init__(self, value):
+        self.value = value
+    def __str__(self):
+        return repr(self.value)
 
 
 if __name__ == '__main__':
+    print "VSV Preview Script -- ALPHA RELEASE -- Expect bugs"
+    print "Make sure your LaTeX compiles as a standalone document before running this script!"
+    
     workingDirectory = sys.argv[1]
     inputFile = sys.argv[2]
+    inputBase = (inputFile.split("/")[-1].split("."))[0]
+    #print inputBase
+    hdrDirectory = "/home/matthew/workspace/vsvpreview/preview/testLatexSources"
+    leftHdrFilename = hdrDirectory+"/template_left_hdr.tex"
+    rightHdrFilename = hdrDirectory+"/template_right_hdr.tex"
+    leftFooterFilename = hdrDirectory+"/template_left_footer.tex"
+    rightFooterFilename = hdrDirectory+"/template_right_footer.tex"
     
-    # step 1: use lexer to get list of time codes
-    with open(inputFile, 'r') as texFile:
-        tex = texFile.read()
-    lexer.timecodeSet = set([])
-    lexer.input(tex)
     
-    for tok in lexer:
-        print(tok)
+    # step 0: check all requirements are accessible
+    # TODO
+    # TODO: check that the LaTeX source compiles before continuing
+    #              pdflatex -interaction=nonstopmode -halt-on-error
+    
+    # step 1: strip comments and write output to intermediate file
+    # TODO make this work from other directories
+    tmpDirectory = workingDirectory + "/" + datetime.datetime.now().strftime('%d%m%Y%H%M%S')
+    noCommentFile = tmpDirectory+"/nocomments.tex"
+    if not os.path.exists(tmpDirectory):
+        os.makedirs(tmpDirectory)
+    subprocess.call(["./strip_comments.pl" + " " + inputFile+  " " +  noCommentFile], shell=True)
         
-    timecodeList = list(lexer.timecodeSet)
-    timecodeList.sort()
+    # step 2: split up by frame and write each frame to a new intermediate file
+    subprocess.call(["./split_frames.pl" + " " +  noCommentFile + " " + " " + tmpDirectory], shell=True)
+    subprocess.call(["rm -f " + noCommentFile], shell=True)
     
     
-    # step 2: iterate over timecode list, setting globals.currentTime, to produce
-    #         series of .tex files.
-    fileCounter = int(0)
-    for time in timecodeList:
-        currentTime = time
-        print "+++++ " + str(currentTime)
-        parser = yacc.yacc()
-        parser.colourVariableCounter = int(0)
-        parser.currentTime = time
-        parser.isInTime = lambda x : (x.startTime <= currentTime and x.endTime > currentTime) 
-        result = parser.parse(tex)
-        filename = workingDirectory+"/part{num:04d}.tex".format(num=fileCounter)
-        print filename
-        with open(filename,"w") as outputFile:
-            outputFile.write(result)
-        fileCounter += 1
+    # step 3: read in each frame
+    frameFiles = os.listdir(tmpDirectory)
+    frameFiles.sort()
+    frameList = []
+    filePattern = re.compile("src_\d+_([\d\-:\.]+)_([\d\-:\.]+)_(left|right)\.tex")
+    for frameFile in frameFiles:
+        fileParts = filePattern.match(frameFile).groups()
+        if (fileParts is None):
+            raise InvalidTmpFileError(frameFile)
+        frameStartTime = fileParts[0]
+        frameEndTime   = fileParts[1]
+        frameType      = fileParts[2]
+        texSrc = None
+        thisFrame  = None
+        with open(tmpDirectory+"/"+frameFile, 'r') as f:
+            texSrc = f.read()
+        assert(texSrc is not None)
+        if (frameType == "right"):
+            thisFrame = RightFrameInput(texSrc,frameStartTime,frameEndTime)
+        elif (frameType == "left"):
+            thisFrame = LeftFrameInput(texSrc,frameStartTime,frameEndTime)
+        else:
+            raise UnknownFrameTypeError(frameType)
+        assert (thisFrame is not None)
+        frameList.append(thisFrame)
+        
+    # step 4: for each frame, create a pdf
+    frameCounter=0
+    for frame in frameList:
+        # step 4.i: use lexer to get list of time codes
+        # initialise lexer
+        print "Parsing frame {fc:04d}".format(fc=frameCounter)
+        #lexer = lex.lex(optimize=globals.MODE_DEBUG)
+        lexer.timecodeSet = set([])
+        lexer.largestSegment = 0
+        lexer.startTimecode = frame.startTime
+        lexer.endTimecode = frame.endTime
+        lexer.input(frame.texSource)
+        
+        # TODO for some reason everything breaks without this
+        for tok in lexer:
+            #print(tok)
+            pass
+        
+        frame.timecodeList = list(lexer.timecodeSet)
+        frame.timecodeList.append(Timecode(frame.startTime))
+        frame.timecodeList.append(Timecode(frame.endTime))
+        frame.timecodeList.sort()
+    
+    
+        # step 4.ii: iterate over timecode list, setting globals.currentTime, to produce
+        #         series of .tex files.
+        fileCounter = int(0)
+        frameDirectory = workingDirectory + "/{frameNum:04d}".format(frameNum=frameCounter)
+        if not os.path.exists(frameDirectory):
+            os.makedirs(frameDirectory)
+        else:
+            # TODO delete every tex file in the directory (with warning)
+            pass   
+        with open(leftHdrFilename,'r') as leftTemplateHdr, open(rightHdrFilename,'r') as rightTemplateHdr, open(leftFooterFilename,'r') as leftTemplateFooter, open(rightFooterFilename,'r') as rightTemplateFooter:
+            leftTemplateHdrContents = leftTemplateHdr.read()
+            rightTemplateHdrContents = rightTemplateHdr.read()
+            leftTemplateFooterContents = leftTemplateFooter.read()
+            rightTemplateFooterContents = rightTemplateFooter.read() 
+        for time in frame.timecodeList:
+            currentTime = time     # TODO get rid of this
+            #print "+++++ " + str(currentTime)
+            parser = yacc.yacc()
+            parser.colourVariableCounter = int(0)
+            parser.currentTime = time     # TODO get rid of this
+            parser.isInTime = lambda x : (x.startTime <= currentTime and x.endTime > currentTime) 
+            result = parser.parse(frame.texSource)
+            filename = frameDirectory+"/part{fileNum:04d}.tex".format(fileNum=fileCounter)
+            #print filename
+            with open(filename,"w") as outputFile:
+                if isinstance(frame,LeftFrameInput):
+                    outputFile.write(leftTemplateHdrContents)
+                elif isinstance(frame,RightFrameInput):
+                    outputFile.write(rightTemplateHdrContents)
+                else:
+                    raise UnknownFrameTypeError(frame)
+                outputFile.write(result)
+                if isinstance(frame,LeftFrameInput):
+                    outputFile.write(leftTemplateFooterContents)
+                elif isinstance(frame,RightFrameInput):
+                    outputFile.write(rightTemplateFooterContents)
+                else:
+                    raise UnknownFrameTypeError(frame)
+            subprocess.call(["./remove_empty_lists.pl" + " " + filename], shell=True)   # TODO move this afterwards to speed things up
+            fileCounter += 1
+        frameCounter +=1
+
+    subprocess.call("rm -r "+tmpDirectory, shell=True)
+
+    # step 5: compile all the sources and assemble a pdf
+    print "Parsing done. Compiling frames to pdf."
+    for frameCount in range(0,frameCounter):
+        print " -- frame {fc:04d}".format(fc=frameCount)
+        #commandString = "cd {fc:04d}; for f in *.tex; do pdflatex $f; done; pdftk *.pdf cat output "+inputBase+"_"+frame.type+"_{fc:04d}.pdf; cd ..".format(fc=frameCount)
+        commandString = "./compile_frames.sh "+workingDirectory+("/{fc:04d} ".format(fc=frameCount))+inputBase+"_"+frame.type+"_{fc:04d}.pdf".format(fc=frameCount)
+        #subprocess.call('cd '+'../test/0000; for f in *.tex; do pdflatex $f; done', stderr='/dev/null', shell=True)
+        subprocess.call(commandString, shell=True)
+        # TODO delete the tmp subdir
+        
+        
+    print "Done."
+
+        
+        
         
     
     

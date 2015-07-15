@@ -8,7 +8,7 @@ import ply.lex as lex
 import globaldecs as globals
 import re
 from preview import Actions
-from Timecode import Timecode
+from Timecode import Timecode, MAX_MINS
 
 startTimecode = 0
 
@@ -17,6 +17,13 @@ class InvalidEnvironmentError(Exception):
         self.value = value
     def __str__(self):
         return repr(self.value)
+    
+class InvalidTimecodeError(Exception):
+    def __init__(self, value):
+        self.value = value
+    def __str__(self):
+        return repr(self.value)
+
 
 tokens = ("vsvBeginEnvGrey",
           "vsvEndEnvGrey",
@@ -57,6 +64,7 @@ def t_vsvBeginEnvGrey(t):
     times = re.findall('[\d\-:\.]+', t.value)
     startTime = Timecode(times[0])
     endTime = Timecode(times[1])
+    # TODO: call validate timecode method
     t.lexer.timecodeSet.add(startTime)
     t.lexer.timecodeSet.add(endTime)
     t.value = Actions.GreyAction(startTime,endTime)
@@ -67,6 +75,7 @@ def t_vsvBeginEnvAppear(t):
     times = re.findall('[\d\-:\.]+', t.value)
     startTime = Timecode(times[0])
     endTime = Timecode(times[1])
+    # TODO: call validate timecode method
     t.lexer.timecodeSet.add(startTime)
     t.lexer.timecodeSet.add(endTime)
     t.value = Actions.AppearAction(startTime,endTime)
@@ -127,6 +136,34 @@ def t_error(t):
     
     
 lexer = lex.lex(optimize=globals.MODE_DEBUG)
+
+
+timecodePattern = re.compile("(\d+)\-(\d+):(\d+)([\.\d+|])")
+# TODO needs testing thoroughly. Written very late.
+def validateNonEmptyTimecode(timecode):
+    # TODO validate end time after start time
+    timecodeParts = timecodePattern.match(timecode).groups()
+    if (timecodeParts is None):
+        raise InvalidTimecodeError(timecode)
+    if (len(timecodeParts) < 3):
+        raise InvalidTimecodeError(timecode)
+    segment = timecodeParts[0]
+    mins = timecodeParts[1]
+    secs = timecodeParts[2]
+    partSecs = timecodeParts[3]
+    if (segment>lexer.largestSegment):
+        if (segment>(lexer.largestSegment+1)):
+            raise InvalidTimecodeError(timecode)
+        else:
+            lexer.largestSegment = segment
+    if (mins<0 | mins>MAX_MINS):
+        raise InvalidTimecodeError(timecode)
+    if (secs<0 | secs>59):
+        raise InvalidTimecodeError(timecode)
+    if (partSecs<0 | partSecs>99):
+        raise InvalidTimecodeError(timecode)
+    
+    
 
 if __name__ == '__main__':
     
