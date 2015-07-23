@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 '''
 Created on 11 Jul 2015
 
@@ -22,23 +24,32 @@ class InvalidTmpFileError(Exception):
 
 if __name__ == '__main__':
     print "VSV Preview Script -- ALPHA RELEASE -- Expect bugs"
-    print "Make sure your LaTeX compiles as a standalone document before running this script!"
+    #print "Make sure your LaTeX compiles as a standalone document before running this script!"
     
-    workingDirectory = sys.argv[1]
-    inputFile = sys.argv[2]
-    inputBase = (inputFile.split("/")[-1].split("."))[0]
+    #print sys.path[0]
+    
+    #workingDirectory = sys.argv[1]
+    workingDirectory = "."
+    try:
+        scriptDir = sys.argv[1]
+        inputFile = sys.argv[2]
+        inputBase = (inputFile.split("/")[-1].split("."))[0]
+    except IndexError:
+        sys.stderr.write("Usage: processSrc.py <script dir> <input LaTeX file>.")
+        sys.exit(1)
+        
+    scriptDir = scriptDir.rsplit('/', 1)[0]
+
     #print inputBase
-    hdrDirectory = "/home/matthew/workspace/vsvpreview/preview/testLatexSources"
-    leftHdrFilename = hdrDirectory+"/template_left_hdr.tex"
-    rightHdrFilename = hdrDirectory+"/template_right_hdr.tex"
-    leftFooterFilename = hdrDirectory+"/template_left_footer.tex"
-    rightFooterFilename = hdrDirectory+"/template_right_footer.tex"
+    hdrDirectory = scriptDir+"/templates/"
+    leftHdrFilename = hdrDirectory+"template_left_hdr.tex"
+    rightHdrFilename = hdrDirectory+"template_right_hdr.tex"
+    leftFooterFilename = hdrDirectory+"template_left_footer.tex"
+    rightFooterFilename = hdrDirectory+"template_right_footer.tex"
     
     
     # step 0: check all requirements are accessible
     # TODO
-    # TODO: check that the LaTeX source compiles before continuing
-    #              pdflatex -interaction=nonstopmode -halt-on-error
     
     # step 1: strip comments and write output to intermediate file
     # TODO make this work from other directories
@@ -46,10 +57,10 @@ if __name__ == '__main__':
     noCommentFile = tmpDirectory+"/nocomments.tex"
     if not os.path.exists(tmpDirectory):
         os.makedirs(tmpDirectory)
-    subprocess.call(["./strip_comments.pl" + " " + inputFile+  " " +  noCommentFile], shell=True)
+    subprocess.call(["strip_comments.pl" + " " + inputFile+  " " +  noCommentFile], shell=True)
         
     # step 2: split up by frame and write each frame to a new intermediate file
-    subprocess.call(["./split_frames.pl" + " " +  noCommentFile + " " + " " + tmpDirectory], shell=True)
+    subprocess.call(["split_frames.pl" + " " +  noCommentFile + " " + " " + tmpDirectory], shell=True)
     subprocess.call(["rm -f " + noCommentFile], shell=True)
     
     
@@ -106,7 +117,8 @@ if __name__ == '__main__':
         # step 4.ii: iterate over timecode list, setting globals.currentTime, to produce
         #         series of .tex files.
         fileCounter = int(0)
-        frameDirectory = workingDirectory + "/{frameNum:04d}".format(frameNum=frameCounter)
+        frameDirectory = tmpDirectory + "/{frameNum:04d}".format(frameNum=frameCounter)
+        print frameDirectory
         if not os.path.exists(frameDirectory):
             os.makedirs(frameDirectory)
         else:
@@ -141,18 +153,19 @@ if __name__ == '__main__':
                     outputFile.write(rightTemplateFooterContents)
                 else:
                     raise UnknownFrameTypeError(frame)
-            subprocess.call(["./remove_empty_lists.pl" + " " + filename], shell=True)   # TODO move this afterwards to speed things up
+            subprocess.call(["remove_empty_lists.pl" + " " + filename], shell=True)   # TODO move this afterwards to speed things up
             fileCounter += 1
         frameCounter +=1
 
-    subprocess.call("rm -r "+tmpDirectory, shell=True)
+    # subprocess.call("rm -r "+tmpDirectory, shell=True)
 
     # step 5: compile all the sources and assemble a pdf
     print "Parsing done. Compiling frames to pdf."
     for frameCount in range(0,frameCounter):
         print " -- frame {fc:04d}".format(fc=frameCount)
+        # TODO assert the file exists
         #commandString = "cd {fc:04d}; for f in *.tex; do pdflatex $f; done; pdftk *.pdf cat output "+inputBase+"_"+frame.type+"_{fc:04d}.pdf; cd ..".format(fc=frameCount)
-        commandString = "./compile_frames.sh "+workingDirectory+("/{fc:04d} ".format(fc=frameCount))+inputBase+"_"+frame.type+"_{fc:04d}.pdf".format(fc=frameCount)
+        commandString = "compile_frames.sh "+tmpDirectory+("/{fc:04d} ".format(fc=frameCount))+inputBase+"_"+frame.type+"_{fc:04d}.pdf".format(fc=frameCount)
         #subprocess.call('cd '+'../test/0000; for f in *.tex; do pdflatex $f; done', stderr='/dev/null', shell=True)
         subprocess.call(commandString, shell=True)
         # TODO delete the tmp subdir

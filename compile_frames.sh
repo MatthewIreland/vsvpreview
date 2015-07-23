@@ -12,5 +12,6 @@ done
 
 pdftk *.pdf cat output $output
 mv $output ..
+dir=$(pwd)
 cd ..
 rm -r $dir

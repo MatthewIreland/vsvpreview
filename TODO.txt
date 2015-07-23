@@ -1,0 +1,15 @@
+
+- make note that you can't have an empty timecode in the frame header, since you need to know what segment it belongs to!
+- parallelise frame processing
+- stop spawning the Perl interpreter so much!
+- grey image overlays
+
+
+
+Tests:
+- mangled timecodes
+-- 
+- invalid timecodes
+-- segment number
+-- 60 second minute
+-- 

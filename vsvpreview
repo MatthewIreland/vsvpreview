@@ -1,0 +1,36 @@
+#!/bin/bash
+
+scriptDir=$0
+srcFile=$1
+
+# TODO: check directories are on PATH and PYTHONPATH
+command -v strip_comments.pl  >/dev/null 2>&1 || { echo >&2 "I can't find strip_comments.pl. Please check your PATH. Exiting."; exit 1; }
+command -v split_frames.pl  >/dev/null 2>&1 || { echo >&2 "I can't find split_frames.pl. Please check your PATH. Exiting."; exit 1; }
+command -v remove_empty_lists.pl  >/dev/null 2>&1 || { echo >&2 "I can't find remove_empty_lists.pl. Please check your PATH. Exiting."; exit 1; }
+command -v compile_frames.sh  >/dev/null 2>&1 || { echo >&2 "I can't find compile_frames.sh. Please check your PATH. Exiting."; exit 1; }
+
+
+# TODO: check PYTHONPATH exists
+# TODO: check PYTHONPATH has required stuff
+
+
+
+# TODO: check LaTeX headers are present and correct
+
+
+# Check source file is valid LaTeX before feeding it to the
+# python compilation script
+pdflatex -interaction=nonstopmode -halt-on-error -shell-escape $srcFile # &>/dev/null
+echo $?
+if [ $? -ne 0 ]; then
+    echo $?
+    >&2 echo "LaTeX compilation failed. Please feed the previewer valid LaTeX! Aborting."
+#     exit 1
+# else
+    # TODO cleap up
+fi
+
+
+# Run the main Python script
+## Does the lexing, yaccing and pdf compilation
+processSrc.py $scriptDir $srcFile
