@@ -6,7 +6,7 @@ Matthew Ireland, 11 July MMXV
 
 Usage
 -----
-Ensure the vsvpreview directory is on your $PATH. Then run `vsvpreview <source_file.tex>` from the directory of the LaTeX source file. A pdf file will be generated for each frame, named...TODO...
+Ensure the vsvpreview directory is on your $PATH. Then run `vsvpreview <source_file.tex>` from the directory of the LaTeX source file. A pdf file will be generated for each frame, named `source_file_<left/right>_<frame num>.pdf` in the same directory.
 
 
 Requirements and setup
@@ -20,16 +20,12 @@ sudo pip install ply
 sudo cpan install File::Slurp
 cd <install directory|>
 git clone TODO
-echo 'PATH="${PATH}:<install directory>/vsvpreview:<install directory>/vsvpreview/preview"' >> ~/.bash_profile
+echo 'PATH="${PATH}:<install directory>"' >> ~/.bash_profile
 echo 'export PATH' >> ~/.bash_profile
-echo 'PYTHONPATH="${PYTHONPATH}:<install directory>/vsvpreview/preview"
-echo 'export PYTHONPATH' >> ~/.bash_profile
 . ~/.bash_profile
 ```
 
 You will need access to the private repository on GitHub.
-
-While the script is still under development, run `git pull origin master` from the install directory before each session with the script.
 
 
 Supported syntax
@@ -55,4 +51,4 @@ Development TODOs
 
 Support
 -------
-TODO
+`mti20@cam.ac.uk` / 07921 137 653

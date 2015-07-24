@@ -10,7 +10,7 @@ if ( "$changed" = true ); then
     >&2 echo "Updated from remote repository. Please re-run script."
     exit 1
 else
-    echo "git up to date."
+    echo "git up-to-date."
 fi
 
 
@@ -47,7 +47,7 @@ if [ $? -ne 0 ]; then
     >&2 echo "LaTeX compilation failed. Please feed the previewer valid LaTeX! Aborting."
      exit 1
  else
-    print "pdflatex worked. Continuing to run the python script."
+    echo "pdflatex worked. Continuing to run the python script."
 fi
 
 
@@ -60,5 +60,5 @@ if [ $? -ne 0 ]; then
     >&2 echo "Errors in preview script. Possibly left environment in inconsistent state."
      exit 1
  else
-    print "Done."
+    echo "Done."
 fi

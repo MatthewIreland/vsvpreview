@@ -60,11 +60,16 @@ if __name__ == '__main__':
     noCommentFile = tmpDirectory+"/nocomments.tex"
     if not os.path.exists(tmpDirectory):
         os.makedirs(tmpDirectory)
-    subprocess.call(["./strip_comments.pl" + " " + inputFile+  " " +  noCommentFile], shell=True)
+    if (subprocess.call(["strip_comments.pl" + " " + inputFile+  " " +  noCommentFile], shell=True) != 0):
+        print "Problem stripping comments from file. Exiting."
+        sys.exit(10)
         
     # step 2: split up by frame and write each frame to a new intermediate file
-    subprocess.call(["./split_frames.pl" + " " +  noCommentFile + " " + " " + tmpDirectory], shell=True)
-    subprocess.call(["rm -f " + noCommentFile], shell=True)
+    if (subprocess.call(["split_frames.pl" + " " +  noCommentFile + " " + " " + tmpDirectory], shell=True) != 0):
+        print "Problem splitting frames. Exiting."
+        sys.exit(13)
+    else:
+        subprocess.call(["rm -f " + noCommentFile], shell=True)
     
     
     # step 3: read in each frame
@@ -150,11 +155,12 @@ if __name__ == '__main__':
                     raise UnknownFrameTypeError(frame)
                 outputFile.write(result)
                 outputFile.write("\input{meta/vsvftr.tex}\n")
-            subprocess.call(["./remove_empty_lists.pl" + " " + filename], shell=True)   # TODO move this afterwards to speed things up
+            if (subprocess.call(["remove_empty_lists.pl" + " " + filename], shell=True) != 0):
+                # TODO move this to end in a single script to speed things up
+                print "Problem removing empty lists. Exiting."
+                sys.exit(11)
             fileCounter += 1
         frameCounter +=1
-
-    # subprocess.call("rm -r "+tmpDirectory, shell=True)
 
     # step 5: compile all the sources and assemble a pdf
     print "Parsing done. Compiling frames to pdf."
@@ -163,13 +169,17 @@ if __name__ == '__main__':
         frame = frameList[frameCount]
         # TODO assert the file exists
         #commandString = "cd {fc:04d}; for f in *.tex; do pdflatex $f; done; pdftk *.pdf cat output "+inputBase+"_"+frame.type+"_{fc:04d}.pdf; cd ..".format(fc=frameCount)
-        commandString = "./compile_frames.sh "+tmpDirectory+("/{fc:04d} ".format(fc=frameCount))+inputBase+"_"+frame.type+"_{fc:04d}.pdf ".format(fc=frameCount)+os.getcwd()
+        commandString = "compile_frames.sh "+tmpDirectory+("/{fc:04d} ".format(fc=frameCount))+inputBase+"_"+frame.type+"_{fc:04d}.pdf ".format(fc=frameCount)+os.getcwd()
         #subprocess.call('cd '+'../test/0000; for f in *.tex; do pdflatex $f; done', stderr='/dev/null', shell=True)
-        subprocess.call(commandString, shell=True)
+        if (subprocess.call(commandString, shell=True) != 0):
+            print "Problem compiling frames. Exiting."
+            sys.exit(12)
         # TODO delete the tmp subdir
         
-        
-    #print "Done."
+    if (subprocess.call("rm -r "+tmpDirectory, shell=True) != 0):
+        print "Could not remove temporary directory. Exiting."
+        sys.exit(13)
+
 
         
         
