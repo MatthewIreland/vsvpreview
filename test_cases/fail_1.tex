@@ -1,0 +1,28 @@
+% Test case 1. This should succeed.
+% Tests of timecode functionality of the preview script.
+
+\input{meta/vsvhdr_integrated.tex}
+
+\begin{vsvframe}{1-0:00.000}{1-5:00}{right}
+\vsvhl{1-0:10}{1-0:20}{This frame is designed to test the ungreying of an environment, and then a bulleted list.}
+
+\begin{vsvgrey}{}{1-0:61}
+\lipsum[66]
+\end{vsvgrey}
+
+\begin{itemize}
+\vsvitem{}{1-0:40}{grey}
+\lipsum[68]
+\vsvitem{}{1-0:50}{grey}
+\lipsum[75]
+\vsvitem{}{1-1:00}{grey}
+Here's a bullet point worth 12 marks.\vsvmarks{12}
+\vsvitem{}{1-1:10}{grey}
+And here's a longer one so that marks should move on to the next line.\vsvmarks{10}
+\end{itemize}
+
+\begin{vsvgrey}{}{1-1:20}
+And then finally this environment will ungrey until the end of the frame.
+\end{vsvgrey}
+
+\end{vsvframe}
