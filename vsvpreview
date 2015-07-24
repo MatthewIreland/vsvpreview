@@ -1,7 +1,18 @@
 #!/bin/bash
 
 scriptDir=$0
+scriptDirShort=${scriptDir::-10}
 srcFile=$1
+
+changed=false
+git pull | grep -q -v 'Already up-to-date.' && changed=true
+if ( "$changed" = true ); then
+    >&2 echo "Updated from remote repository. Please re-run script."
+    exit 1
+else
+    echo "git up to date."
+fi
+
 
 # TODO: check directories are on PATH and PYTHONPATH
 command -v strip_comments.pl  >/dev/null 2>&1 || { echo >&2 "I can't find strip_comments.pl. Please check your PATH. Exiting."; exit 1; }
@@ -10,27 +21,44 @@ command -v remove_empty_lists.pl  >/dev/null 2>&1 || { echo >&2 "I can't find re
 command -v compile_frames.sh  >/dev/null 2>&1 || { echo >&2 "I can't find compile_frames.sh. Please check your PATH. Exiting."; exit 1; }
 
 
-# TODO: check PYTHONPATH exists
-# TODO: check PYTHONPATH has required stuff
+if [[ $PYTHONPATH != *"preview"* ]]; then
+    PYTHONPATH="$PYTHONPATH:$scriptDirShort:$scriptDirShort/preview"
+    export PYTHONPATH
+    echo "Python path changed to $PYTHONPATH"
+fi
 
+if [[ $PATH != *"/preview"* ]]; then
+    PATH="$PATH:$scriptDirShort/preview"
+    export PATH
+    echo "Path changed to $PATH"
+fi
 
-
-# TODO: check LaTeX headers are present and correct
-
+# check LaTeX headers are present and correct; otherwise symlink to them.
+if [ ! -e "meta/vsvdefs.tex" ]; then
+    echo "Cannot find meta directory. symlinking..."
+    ln -s "$scriptDirShort/meta" meta
+fi
 
 # Check source file is valid LaTeX before feeding it to the
 # python compilation script
 pdflatex -interaction=nonstopmode -halt-on-error -shell-escape $srcFile # &>/dev/null
-echo $?
 if [ $? -ne 0 ]; then
     echo $?
     >&2 echo "LaTeX compilation failed. Please feed the previewer valid LaTeX! Aborting."
-#     exit 1
-# else
-    # TODO cleap up
+     exit 1
+ else
+    print "pdflatex worked. Continuing to run the python script."
 fi
 
 
 # Run the main Python script
 ## Does the lexing, yaccing and pdf compilation
-processSrc.py $scriptDir $srcFile
+processSrc.py $scriptDir $srcFile $scriptDirShort
+
+if [ $? -ne 0 ]; then
+    echo $?
+    >&2 echo "Errors in preview script. Possibly left environment in inconsistent state."
+     exit 1
+ else
+    print "Done."
+fi

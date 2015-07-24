@@ -110,9 +110,9 @@ def p_hl(p):
 def p_correct(p):
     'correct : vsvCorrect'
     if ((p[1].startTime <= p.parser.currentTime) and (p[1].endTime > p.parser.currentTime)):
-        p[0] = '\\xxxcorrect'
+        p[0] = '\\vsvxcorrect'
     else:
-        p[0] = ''
+        p[0] = '\\vsvxxcorrect'
         
 def p_list_itemize(p):
     'list : vsvListBeginItemize latexString listBody vsvListEndItemize'
@@ -142,10 +142,12 @@ def p_listBody(p):
     if (isinstance(p[1], Actions.GreyAction)):
         #if (p.parser.isInTime(p[1])):
         if ((p[1].startTime <= p.parser.currentTime) and (p[1].endTime > p.parser.currentTime)):
-            p[0] = '\\item\n\colorlet{oldcolour'+str(p.parser.colourVariableCounter)+'}{.}\\color{gray}'+p[2]+'\color{oldcolour'+str(p.parser.colourVariableCounter)+'}\n'+p[3]
+            p[0] = '\\item \n \colorlet{oldcolour'+str(p.parser.colourVariableCounter)+'}{.}\\leavevmode\\color{gray}'+p[2]+'\\leavevmode\color{oldcolour'+str(p.parser.colourVariableCounter)+'}\n'+p[3]  # NB no newline after }
             p.parser.colourVariableCounter += 1
         else:
-            p[0] = '\\item' + p[2] + p[3]
+            #p[0] = '\\item' + p[2] + p[3]
+            p[0] = '\\item \n \colorlet{oldcolour'+str(p.parser.colourVariableCounter)+'}{.}\\leavevmode\\color{black}'+p[2]+'\\leavevmode\color{oldcolour'+str(p.parser.colourVariableCounter)+'}\n'+p[3]  # NB no newline after }
+            p.parser.colourVariableCounter += 1
     elif (isinstance(p[1], Actions.AppearAction)):
         #if (p.parser.isInTime(p[1])):
         if ((p[1].startTime <= p.parser.currentTime) and (p[1].endTime > p.parser.currentTime)):
@@ -164,7 +166,7 @@ def p_listBody(p):
 
 
 if __name__ == '__main__':
-    parser = yacc.yacc()
+    parser = yacc.yacc(debug=False)
     parser.colourVariableCounter = int(0)
  
     with open('testLatexSources/test6.tex', 'r') as texFile:

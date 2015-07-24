@@ -67,9 +67,9 @@ class Timecode(object):
         else:
             raise InvalidTimecodeError("Specify either string or timecode")
         
-        if (self.mins<0 | self.mins>MAX_MINS):
+        if (self.mins<0 or self.mins>MAX_MINS):
             raise InvalidTimecodeError("Mins value {m:02d} out of range".format(m=self.mins))
-        if (self.secs<0 | self.secs>59):
+        if (self.secs<0 or self.secs>59):
             raise InvalidTimecodeError("Secs value {s:02d} out of range".format(s=self.secs))
         if (self.fraction is not None):
             if (self.fraction<0 | self.fraction>99):

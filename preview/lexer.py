@@ -78,7 +78,7 @@ def t_vsvBeginEnvGrey(t):
     return t
 
 def t_vsvBeginEnvAppear(t):
-    r'\\begin\{vsvappear\}\{[\d\-:\.]+\}\{[\d\-:\.]+\}'
+    r'\\begin\{vsvappear\}\{[\d\-:\.]*\}\{[\d\-:\.]*\}'
     #times = re.findall('[\d\-:\.]+', t.value)
     times = re.findall('\{([\d\-:\.]*)\}', t.value)
     if (times[0] == ""):
@@ -97,7 +97,7 @@ def t_vsvBeginEnvAppear(t):
     return t
 
 def t_vsvHighlight(t):
-    r'\\vsvhl\{[\d\-:\.]+\}\{[\d\-:\.]+\}'
+    r'\\vsvhl\{[\d\-:\.]*\}\{[\d\-:\.]*\}'
     #times = re.findall('[\d\-:\.]+', t.value)
     times = re.findall('\{([\d\-:\.]*)\}', t.value)
     if (times[0] == ""):
@@ -116,7 +116,7 @@ def t_vsvHighlight(t):
     return t
 
 def t_vsvCorrect(t):
-    r'\\vsvcorrect\{[\d\-:\.]+\}\{[\d\-:\.]+\}'
+    r'\\vsvcorrect\{[\d\-:\.]*\}\{[\d\-:\.]*\}'
     #times = re.findall('[\d\-:\.]+', t.value)
     times = re.findall('\{([\d\-:\.]*)\}', t.value)
     if (times[0] == ""):

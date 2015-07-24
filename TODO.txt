@@ -3,7 +3,8 @@
 - parallelise frame processing
 - stop spawning the Perl interpreter so much!
 - grey image overlays
-
+- process newline as separate token in lexer, so that line numbers in error messages mean something
+- add an "if" statement to check disappearing timecode is not the end-of-frame timecode.
 
 
 Tests:

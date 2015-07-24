@@ -1,49 +1,49 @@
-\documentclass[11pt]{article}
+% Test case 1. This should succeed.
+% Tests of timecode functionality of the preview script.
 
-\input{vsv_template_hdr.tex}
+\input{meta/vsvhdr_integrated.tex}
 
-% Test of timecode functionality of the preview script.
-
-\begin{doucment}
-
-\begin{frame}{1-0:00}{1-5:00}{right}
+\begin{vsvframe}{1-0:00.000}{1-5:00}{right}
 \vsvhl{1-0:10}{1-0:20}{This frame is designed to test the ungreying of an environment, and then a bulleted list.}
 
-\begin{vsvgrey}{1-0:30}{}
+\begin{vsvgrey}{}{1-0:30}
 \lipsum[66]
 \end{vsvgrey}
 
 \begin{itemize}
-\vsvitem{1-0:40}{}{grey}
-\lipsum[74]
-\vsvitem{1-0:50}{}{grey}
+\vsvitem{}{1-0:40}{grey}
+\lipsum[68]
+\vsvitem{}{1-0:50}{grey}
 \lipsum[75]
-\vsvitem{1-1:00}{}{grey}
-\lipsum[74]
-\vsvitem{1-1:10}{}{grey}
-\lipsum[75]
-\vsvitem{1-1:20}{}{grey}
-\lipsum[74]
-\vsvitem{1-1:50}{}{grey}
-\lipsum[75]
+\vsvitem{}{1-1:00}{grey}
+Here's a bullet point worth 12 marks.\vsvmarks{12}
+\vsvitem{}{1-1:10}{grey}
+And here's a longer one so that marks should move on to the next line.\vsvmarks{10}
 \end{itemize}
 
-\begin{vsvgrey}{1-2:00}{}
+\begin{vsvgrey}{}{1-1:20}
 And then finally this environment will ungrey until the end of the frame.
 \end{vsvgrey}
 
-\end{frame}
+\end{vsvframe}
 
-\begin{frame}{1-0:00}{1-5:00.10}{left}
+\begin{vsvframe}{1-0:00}{1-5:00.10}{left}
 \vsvhl{1-0:9.50}{1-00:020.60}{This frame is designed to test code correction.}
 
-TODO: put some code here
+\lstset{columns=flexible,style=customc}
+\begin{lstlisting}
+~ \vsvcorrect{1-0:30}{}{tmp1=a*b}{tmp1=a-b} ~
+ x = tmp1+c;    // this is a comment
+\end{lstlisting}
 
-% TODO: put a description list here
-\end{frame}
+\begin{vsvappear}{1-0:40}{}
+And so you can see text was corrected!
+\end{vsvappear}
+
+\end{vsvframe}
 
 
-\begin{frame}{1-5:00}{1-10:00.01}{right}
+\begin{vsvframe}{1-5:00}{1-10:00.01}{right}
 \vsvhl{1-5:10}{1-5:20}{This frame is designed to test appearance of items in a list and image includes.}
 
 \begin{vsvappear}{1-5:30}{}
@@ -59,30 +59,32 @@ This text will appear! Hello cruel world, from this paragraph!
 
 \vsvitem{1-06:00}{}{appear}
 \includegraphics[scale=0.2]{img/0003.jpg}
+\end{enumerate}
+\end{vsvframe}
 
+\begin{vsvframe}{1-5:00}{1-10:00.01}{left}
+More image includes...
+
+\begin{enumerate}
 \vsvitem{1-6:000000000000000010}{}{appear}
-\includegraphics[scale=0.2]{img/0004.jpg}
+\includegraphics[scale=0.1]{img/0004.jpg}
 \end{enumerate}
 
 \begin{vsvappear}{1-00000000000000006:20}{}
 And one final piece of text to appear!
 
-\includegraphics[scale=0.2]{TODO}
+\includegraphics[scale=0.1]{img/0005.jpg}
 \end{vsvappear}
 
-\end{frame}
+\end{vsvframe}
 
-\begin{frame}{1-10:00.01}{2-5:00}{left}
+\begin{vsvframe}{1-10:00.01}{2-5:00}{left}
 \vsvhl{}{}{This is a cross-segment frame.}
 
 
-
-
 % TODO do a strikethrough in a bullet point
+% TODO description list
 
+\end{vsvframe}
 
-\end{frame}
-
-\input{vsv_template_footer.tex}
-
-\end{document}
+\input{meta/vsvftr.tex}

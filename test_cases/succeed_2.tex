@@ -1,12 +1,94 @@
-\documentclass[11pt]{article}
+% Test case 2. This should succeed.
+% Test of the typesetting of examination questions
+% and answers in left and right frames.
 
-\input{vsv_template_hdr.tex}
+\input{meta/vsvhdr_integrated.tex}
 
-% Test of the typesetting of examination questions in left
-% and right frames.
+This is an example of a fictional exam question.
 
-\begin{document}
+\the\topskip
+
+\the\partopsep
+
+\the\topsep
+
+
+\begin{vsvframe}{1-0:00}{1-5:00}{right}
+
+\begin{enumerate}[(a)]
+\vsvitem{}{1-0:10}{grey}
+Here is a bit of code. Start by looking at it.
+
+\begin{Verbatim}
+public static bool isThisGrey() {
+    if (text is grey) {
+        return true;
+    } otherwise {
+        return false;
+    }
+}
+\end{Verbatim}
+
+Did that work?
+\vsvmarks{2}
+
+\begin{itemize}
+\vsvitem{}{1-0:15}{grey}
+Yes. Good.
+\end{itemize}
+
+\vsvitem{}{1-0:20}{grey}
+Explain what is meant by source code, machine code and Java bytecode.
+Give two advantages of distributing Java software as bytecode rather than source code.
+\vsvmarks{5}
+
+\begin{itemize}
+\vsvitem{}{1-0:25}{grey}
+\emph{Source code}:
+High-level code written by a developer.
+Can be understood and reasoned about by humans.
+For most tasks, the developer does not need knowledge of the underlying architecture on which the code will be run.
+\vsvitem{}{1-0:30}{grey}
+\emph{Machine code}:
+Low-level instructions that are decoded and executed by a processor.
+Instructions are defined by that processor's instruction set and will differ between architectures.
+Machine code is not usually read or written by humans except to perform extreme optimisations (e.g.\ scheduler in an operating system).
+\vsvitem{}{1-0:35}{grey}
+\emph{Java bytecode}:
+Machine code for an abstract machine -- the Java Virtual Machine.
+Stack-based architecture.
+Small code size.
+%\vsvitem{}{1-0:40}{grey} \emph{Advantages}:
+%Cross-platform -- can be run on any architecutre for which a JVM has been written. Can be obfuscated to make reverse engineering hard -- easier to protect IP than if distributing the source code.
+\end{itemize}
+\end{enumerate}
+\end{vsvframe}
 
 
 
-\begin{frame}
+\begin{vsvframe}{1-0:00}{1-5:00}{left}
+Here's a state machine:
+
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.5cm,
+semithick]
+\tikzstyle{every state}=[fill=white,draw,text=black, minimum width=1.2cm]
+\node[state] (S0) {$S_0$};
+\node[state] (S1) [right of = S0] {$S_1$};
+\node[state] (S2) [right of = S1] {$S_2$};
+\node[state] (S3) [right of = S2] {$S_3$};
+
+\path (S0) edge node {$N$} (S1)
+(S1) edge node {$N$} (S2)
+(S2) edge node {$N+D$} (S3)
+(S3) edge[loop below] node {$1$} (S3)
+(S0) edge[bend left=60] node {$D$} (S2)
+(S1) edge[bend right=60] node[below] {$D$} (S3)
+(S0) edge[loop below] node {$\overline{D}.\overline{N}$} (S0)
+(S1) edge[loop below] node {$\overline{D}.\overline{N}$} (S1)
+(S2) edge[loop above] node {$\overline{D}.\overline{N}$} (S2)
+;
+\end{tikzpicture}
+
+\end{vsvframe}
+
+\input{meta/vsvftr.tex}
