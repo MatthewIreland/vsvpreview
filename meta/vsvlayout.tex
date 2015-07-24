@@ -1,0 +1,65 @@
+%% Common layout elements
+%% Matthew Ireland, 23 July MMXV
+
+% Font definitions
+% Upgraded from those in FHK's FORMAT.tex to use
+% Latin Modern for vectorization & additional glyphs.
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+
+
+% Length definitions
+\makeatletter
+\g@addto@macro\normalsize{%
+ %% page layout
+   % see corresponding documents for left/right frames
+ %% paragraphs
+   \setlength{\baselineskip}{12pt plus 0pt minus 0pt}
+   \setlength{\parskip}{12pt plus 0pt minus 0pt}
+   \setlength{\parindent}{0pt plus 0pt minus 0pt}
+ %% floats
+   \setlength{\floatsep}{12pt plus 0 pt minus 0pt}
+   \setlength{\textfloatsep}{20pt plus 0pt minus 0pt}
+   \setlength{\intextsep}{14pt plus 0pt minus 0pt}
+   \setlength{\dbltextfloatsep}{20pt plus 0pt minus 0pt}
+   \setlength{\dblfloatsep}{14pt plus 0pt minus 0pt}
+ %% maths
+   \setlength{\abovedisplayskip}{12pt plus 0pt minus 0pt}
+   \setlength{\belowdisplayskip}{12pt plus 0pt minus 0pt}
+ %% lists
+   \setlength{\topsep}{10pt plus 0pt minus 0pt}
+   \setlength{\partopsep}{3pt plus 0pt minus 0pt}
+   \setlength{\itemsep}{5pt plus 0pt minus 0pt}
+   \setlength{\labelsep}{8mm plus 0mm minus 0mm}
+   \setlength{\parsep}{\the\parskip}
+   \setlength{\listparindent}{\the\parindent}
+ %% verbatim
+   \setlength{\fboxsep}{5pt plus 0pt minus 0pt}
+}
+\makeatother
+
+
+% PERMIT GAPPY TEXT IN PREFERENCE TO HYPHENS
+\hyphenpenalty=10000
+\tolerance=10000
+
+
+% make links not-ugly
+\hypersetup{
+    colorlinks=false,
+    pdfborder={0 0 0},
+}
+
+%%%% referencing with § character %%%%
+\crefformat{section}{§#2#1#3}
+\crefname{section}{§}{§§}
+\Crefname{section}{§}{§§}
+
+% frames
+\definecolor{shadecolor}{rgb}{1,0.8,0.3}
+
+
+% tables -- centre text vertically
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}

@@ -1,0 +1,36 @@
+\section*{Length variables}
+
+% List taken from http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/squeeze.html
+% Alternatively grep the article class.
+
+\begin{tabular}{p{3.5cm}p{5.6cm}p{5cm}}
+\multicolumn{3}{c}{\textbf{Page layout}}\\
+columnsep & \the\columnsep & gap between columns\\
+topmargin & \the\topmargin & gap above header\\
+topskip & \the\topskip & between header and text\\
+textheight & \the\textheight & height of main text\\
+textwidth & \the\textwidth & width of text\\
+oddsidemargin & \the\oddsidemargin & odd page left margin\\
+evensidemargin & \the\evensidemargin & even page left margin\\
+\multicolumn{3}{c}{\textbf{Paragraphs}}\\
+baselineskip & \the\baselineskip & minimum space between the bottom of two successive lines in a paragraph\\
+parindent & \the\parindent & indentation of paragraphs\\
+parskip & \the\parskip & gap between paragraphs\\
+\multicolumn{3}{c}{\textbf{Floats (tables and figures)}}\\
+floatsep & \the\floatsep & space left between floats\\
+textfloatsep & \the\textfloatsep & space between last top float or first bottom float and the text\\
+intextsep & \the\intextsep & space left on top and bottom of an in-text float\\
+dbltextfloatsep & \the\dbltextfloatsep & textfloatsep for 2 column output\\
+dblfloatsep & \the\dblfloatsep & floatsep for 2 column output\\
+abovecaptionskip & \the\abovecaptionskip & space above caption\\
+belowcaptionskip & \the\belowcaptionskip & space below caption\\
+\multicolumn{3}{c}{\textbf{Maths}}\\
+abovedisplayskip & \the\abovedisplayskip & space before maths\\
+belowdisplayskip & \the\belowdisplayskip & space after maths\\
+arraycolsep & \the\arraycolsep & gap between columns of an array\\
+\multicolumn{3}{c}{\textbf{Lists}}\\
+topsep & \the\topsep & space between first item and preceding paragraph\\
+partopsep & \the\partopsep & extra space added to topsep when environment starts a new paragraph\\
+itemsep & \the\itemsep & space between successive items\\
+\end{tabular}
+

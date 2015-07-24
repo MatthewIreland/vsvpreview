@@ -1,0 +1,65 @@
+%%% VSV macro definitions
+
+
+% FHK's \marks definition, repackaged as LaTeX
+\newcommand{\vsvmarks}[1]{{\unskip \nobreak \hfil \penalty 50 \hskip 8pt
+                \hbox{}\nobreak \hfil \setbox0=\hbox{#1}%
+                [\ifdim \wd0>11pt #1\else #1 mark\ifnum #1=1\else s\fi\fi]%
+                \parfillskip=0pt \finalhyphendemerits=0\par}}
+
+% FHK's \def macro, to be repackaged as LaTeX (TODO)
+\def \Def {\buildrel {\rm def} \over = }
+
+% TDJ's \examhead
+\newcommand{\vsvexamhead}[3]{\section{#1 Paper #2 Question #3}}
+
+% This is an attempt to implement FHK's \beginquestion in LaTeX
+% Usage: \begin{vsvquestion}{<year>}{<paper>}{<question num>}
+\newenvironment{vsvoldquestion}[3]%
+ {\subsection*{#1 Paper #2}\begin{minipage}[t]{24pt}{\textbf{#3}}\end{minipage}\begin{minipage}{\textwidth-24pt}}
+ {\end{minipage}\vspace{12pt}}
+
+
+% This is a better way to do questions
+\newenvironment{vsvquestion}[3]%
+ {\subsection*{#1 Paper #2 Question #3}}
+ {\vspace{12pt}}
+
+
+\newcommand{\vsvitem}[3]{\item}
+
+\definecolor{hlcolour}{rgb}{1,1,0}
+\sethlcolor{hlcolour}
+%\newcommand{\vsvhl}[1]{\hspace{-2pt}\hl{\mbox{}~#1~\mbox{}}\hspace{-2pt}}
+\newcommand{\vsvhl}[3]{\hl{#3}}
+
+\newcommand{\vsvhlnowrap}[3]{\colorbox{hlcolour}{{#3}}}
+
+\setstcolor{red}
+\newcommand{\vsvcorrect}[4]{\st{#3}\ \ \ \ \ #4}
+\newcommand{\vsvxcorrect}[2]{\vsvcorrect{}{}{#1}{#2}}
+\newcommand{\vsvxxcorrect}[2]{#1}
+
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\fontsize{11pt}{13pt}\selectfont\ttfamily,
+  columns=flexible,
+  keepspaces=true,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+  escapechar=~
+}
+
+
+
+
+\newenvironment{vsvgrey}[2]{\color{gray}}{\color{black}}
+
+\newenvironment{vsvappear}[2]{}{}
+

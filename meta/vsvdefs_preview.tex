@@ -1,0 +1,28 @@
+%%%% preview environment %%%%
+\newcounter{vsvrhscounter}
+\newcounter{vsvlhscounter}
+\makeatletter
+\newcommand\vsvsetwidth[3]{%
+  \ifnum\pdf@strcmp{\unexpanded{#1}}{right}=0 %
+     \expandafter\@firstoftwo
+  \else
+    \expandafter\@secondoftwo
+  \fi
+    {\eject \pdfpageheight=171mm \newgeometry{textheight=143mm,textwidth=129mm,top=28mm,bottom=10mm,left=14mm,showframe=true}\fancyhf[LC]{}\fancyhf[HC]{\textbf{Question (right-hand) pane -- Number R\thevsvrhscounter}\\In: #2 --- Out: #3}\stepcounter{vsvrhscounter}}
+    {\eject \pdfpageheight=105mm \newgeometry{textheight=67mm,paperwidth=149mm,textwidth=129mm,top=28mm,bottom=10mm,left=14mm,showframe=true}\fancyhf[LC]{}\fancyhf[HC]{\textbf{Image/code (left-hand) pane -- Number L\thevsvlhscounter}\\In: #2 --- Out: #3}\stepcounter{vsvlhscounter}}%
+}
+\makeatother
+
+
+
+\newenvironment{vsvframe}[3]{%
+\vsvsetwidth{#3}{#1}{#2}
+\thispagestyle{fancy}
+
+\begin{mdframed}
+}%
+{\end{mdframed}
+
+\eject \pdfpageheight=297mm
+\restoregeometry
+\pagestyle{empty}}

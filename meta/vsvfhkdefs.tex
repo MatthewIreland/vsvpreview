@@ -1,0 +1,23 @@
+% Those of FHK's defs that it
+%  (i)  makes sense to use in the VSV template
+%  (ii) shouldn't cause bugs when imported as-are to LaTeX
+
+
+
+% \mycopy SETS <return>, <space>, and <apostrophe> active for copying
+% laid-out text as it appears.  \mycopy is NOT a verbatim macro.
+
+{\catcode`\^^M=13%
+\catcode`\ =13%
+\catcode`\'=13%
+\gdef\mycopy{\begingroup%
+\parskip=0pt\tt%
+\def\par{\leavevmode\endgraf}%
+\catcode`\^^M=13\let^^M=\par%
+\catcode`\ =13\let =\ %
+\catcode`\'=13\def'{\char"0D}}}
+
+\def \myfill {\endgroup}       % terminate copied material
+
+\def \'{{\tt \char"0D}}        % \' is a non-slanting apostrophe
+

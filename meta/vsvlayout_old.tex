@@ -1,0 +1,59 @@
+%% Common layout elements
+%% Matthew Ireland, 23 July MMXV
+
+% Font definitions
+% These are consistent with FHK's declarations for
+% progress tests. Check FORMAT.tex before changing.
+\renewcommand{\rmdefault}{cmr}
+\renewcommand{\sfdefault}{cmss}
+\renewcommand{\ttdefault}{cmtt}
+\renewcommand{\bfdefault}{cmbx}
+\renewcommand{\itdefault}{cmti}
+\SetSymbolFont{operators}   {normal}{OT1}{cmr} {m}{n}
+\SetSymbolFont{letters}     {normal}{OML}{cmm} {m}{it}
+\SetSymbolFont{symbols}     {normal}{OMS}{cmsy}{m}{n}
+\SetSymbolFont{largesymbols}{normal}{OMX}{cmex}{m}{n}
+\SetSymbolFont{operators}   {bold}  {OT1}{cmr} {bx}{n}
+\SetSymbolFont{letters}     {bold}  {OML}{cmm} {b}{it}
+\SetSymbolFont{symbols}     {bold}  {OMS}{cmsy}{b}{n}
+\SetSymbolFont{largesymbols}{bold}  {OMX}{cmex}{m}{n}
+\SetMathAlphabet{\mathbf}{normal}{OT1}{cmr}{bx}{n}
+\SetMathAlphabet{\mathsf}{normal}{OT1}{cmss}{m}{n}
+\SetMathAlphabet{\mathit}{normal}{OT1}{cmr}{m}{it}
+\SetMathAlphabet{\mathtt}{normal}{OT1}{cmtt}{m}{n}
+\SetMathAlphabet{\mathbf}{bold}  {OT1}{cmr}{bx}{n}
+\SetMathAlphabet{\mathsf}{bold}  {OT1}{cmss}{bx}{n}
+\SetMathAlphabet{\mathit}{bold}  {OT1}{cmr}{bx}{it}
+\SetMathAlphabet{\mathtt}{bold}  {OT1}{cmtt}{m}{n}
+\usepackage[T1]{fontenc}
+
+
+% page layout (mostly in left/right documents)
+\advance \vsize by 60pt
+\setlength{\parskip}{12pt plus 0pt minus 0pt}
+\setlength{\parindent}{0pt plus 0pt minus 0pt}   % don't indent first lines of paragraphs
+
+
+% PERMIT GAPPY TEXT IN PREFERENCE TO HYPHENS
+\hyphenpenalty=10000
+\tolerance=10000
+
+
+% make links not-ugly
+\hypersetup{
+    colorlinks=false,
+    pdfborder={0 0 0},
+}
+
+%%%% referencing with § character %%%%
+\crefformat{section}{§#2#1#3}
+\crefname{section}{§}{§§}
+\Crefname{section}{§}{§§}
+
+% frames
+\definecolor{shadecolor}{rgb}{1,0.8,0.3}
+
+% tables -- centre text vertically
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
