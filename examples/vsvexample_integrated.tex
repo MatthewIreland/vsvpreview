@@ -1,0 +1,96 @@
+% Example of VSV document.
+% Matthew Ireland June/July MMXV
+
+\input{meta/vsvhdr_integrated.tex}
+
+\section*{Examples}
+
+This provides a very brief overview of the core functionality of the VSV preview script.
+Also see the \verb=test_cases= folder for a wider range of examples.
+
+\subsection*{Greying out text}
+\begin{vsvgrey}{}{1-00:20}
+Grey out blocks of text like this.
+\end{vsvgrey}
+
+\begin{itemize}
+\vsvitem{}{1-00:30}{grey}
+In lists, use the \verb=\vsvitem= macro in lists instead of \verb=\item=.
+\end{itemize}
+
+The first two arguments to \verb=\vsvitem= follow the standard timecode convention (described in the Word document).
+Leaving the third argument empty reduces \verb=\vsvitem= to be exactly the same as \verb=\item=.
+Alternatively, specify \verb=grey= or \verb=appear= in the third argument to indicate whether the item should be un-greyed or should appear afresh at the timecode in the first argument.
+\verb=\vsvitem= can also be used in \verb=enumerate= and \verb=description= lists, as if it were \verb=\item=.
+
+\subsection*{Making text appear}
+\begin{vsvappear}{1-00:40}{}
+Make blocks of text appear like this.
+\end{vsvappear}
+
+\begin{itemize}
+\vsvitem{1-00:50}{}{appear}
+In lists, again use the \verb=\vsvitem= syntax.
+\end{itemize}
+
+\subsection*{Highlighting}
+Text \vsvhl{2-00:00}{2-00:10}{can be highlighted} like this.
+If the lines are long, this method will \vsvhl{27-15}{}{wrap around} the line ends.
+
+%Alternatively, \vsvhlnowrap{40-04}{}{highlight like this} to avoid the shrinkwrap appearance.
+%However, such highlights cannot be wrapped around line ends (yet -- working on it).
+
+
+\subsection*{Strikethrough corrections}
+A correction can be placed to the right of standalone text like this:
+
+This is the incorrect text.
+
+\vsvcorrect{27-15}{}{This is the incorrect text.}{This is the corrected text}
+
+\subsection*{Code}
+Use the Listings package for automated syntax highlighting as follows:
+
+\lstset{style=customc}
+\begin{lstlisting}
+ tmp1 = a*b;
+ x = tmp1+c;    // this is a comment
+\end{lstlisting}
+
+Corrections can be made as follows:
+
+\lstset{style=customc}
+\begin{lstlisting}
+~ \vsvcorrect{27-15}{}{tmp1=a*b}{tmp1=a-b}~
+ x = tmp1+c;    // this is a comment
+\end{lstlisting}
+
+\subsection*{Marks}
+
+FHK's \verb=\marks= macro has been imported as \verb=\vsvmarks=\vsvmarks{5}.
+
+\subsection*{Frame Environments}
+
+Examples of frames (1-per-page):
+
+\begin{vsvframe}{1-00:00}{2-10:00}{right}
+\begin{enumerate}[(a)]
+\vsvitem{1-00:10}{}{appear}
+\lipsum[1]
+\vsvitem{1-00:20}{}{appear}
+\lipsum[2]
+\vsvitem{2-00:00}{}{appear}
+\lipsum[68]
+\vsvitem{2-00:10}{}{appear}
+Filling to the end... more text... more text... more text... more text... more text... more text... more text... more text... more text... more text... more text... more text... more text... more text... more text...
+\end{enumerate}
+\end{vsvframe}
+
+\begin{vsvframe}{1-00:00.10}{1-00:10.20}{left}
+\begin{enumerate}[(a)]
+\vsvitem{}{1-00:010.20}{grey}
+\lipsum[1]
+\end{enumerate}
+\end{vsvframe}
+
+\input{meta/vsvftr.tex}
