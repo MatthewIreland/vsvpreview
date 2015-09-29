@@ -39,7 +39,6 @@ Known bugs
 ----------
 * Whitespace is needed before each vsv command. So `~ \vsvcorrect{...}` is correct, but `~\vsvcorrect{...}` is not.
 
-* If writing a VSV to be played during a positive leap second, the 61st second in the minute will be rejected as invalid. The behaviour is undefined, since it largely depends on the video player. This is mitigated by the fact that a leap second will never take place during a VSV. Negative leap seconds should work just fine, subject to the occurrence of kernel panic.
 
 
 Development TODOs
