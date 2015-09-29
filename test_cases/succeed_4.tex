@@ -1,0 +1,51 @@
+% Test case 4. This should succeed.
+% Tests of mathematics & tikz.
+
+\input{meta/vsvhdr_integrated.tex}
+
+\begin{vsvframe}{1-0:00.000}{1-5:00}{right}
+\vsvhl{1-0:10}{1-0:20}{This frame is designed to test mathematics.}
+
+\begin{vsvgrey}{}{1-0:30}
+\[
+h^2 = a^2+b^2\qquad\text{Pythagoras}
+\]
+\end{vsvgrey}
+
+\end{vsvframe}
+
+\begin{vsvframe}{1-5:00.100}{1-6:00.200}{left}
+This is a left frame.
+
+$h^2=a^2+b^2$
+
+\begin{vsvappear}{1-5:30}{}
+\begin{align*}
+h^2=a^2+b^2
+\end{align*}
+\end{vsvappear}
+
+\begin{enumerate}
+\vsvitem{1-5:31.100}{}{appear}
+$h^2=a^2+b^2$
+\vsvitem{}{1-5:33}{grey}
+\begin{tikzpicture}[semithick,scale=0.2]
+  % left axis
+  \draw (0,0) -- (0,6.5);
+
+  % labels
+  \node[anchor=center] at (-0.6,1) {$B^{\prime}$};
+  \node[anchor=center] at (-0.6,2.5) {$A^{\prime}$};
+  \node[anchor=center] at (-0.6,4) {$B$};
+  \node[anchor=center] at (-0.6,5.5) {$A$};
+
+  \draw (0,1.5) -- ++(0.75,0) -- ++(0,-1) -- (7.5,0.5);
+  \draw (0,2) -- ++(1.15,0) -- ++(0,1) -- (7.5,3);        % set:   +2 gate delays
+  \draw (0,4.5) -- ++(0.675,0) -- ++(0,-1) -- (7.5,3.5);  % reset: +1 gate delay
+  \draw (0,5) -- ++(1,0) -- ++(0.3,0) -- ++(0,1) -- ++(0.3,0) -- ++(0,-1) -- ++(0.3,0) -- ++(0,1) -- ++(0.3,0) -- ++(0,-1) -- ++(0.3,0) -- ++(0,1) -- ++(0.3,0) -- ++(0,-1) -- ++(0.3,0) -- ++(0,1) -- ++(0.3,0) -- ++(0,-1) -- ++(0.3,0) -- ++(0,1) -- (7.5,6);
+\end{tikzpicture}
+\end{enumerate}
+
+\end{vsvframe}
+
+\input{meta/vsvftr.tex}
