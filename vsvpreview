@@ -1,7 +1,7 @@
 #!/bin/bash
 
 scriptDir=$0
-scriptDirShort=${scriptDir::-10}
+scriptDirShort=${scriptDir:0:${#scriptDir}-10}
 srcFile=$1
 
 changed=false
