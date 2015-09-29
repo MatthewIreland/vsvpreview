@@ -35,9 +35,11 @@ fi
 
 # check LaTeX headers are present and correct; otherwise symlink to them.
 if [ ! -e "meta/vsvdefs.tex" ]; then
-    echo "Cannot find meta directory. symlinking..."
-    ln -s "$scriptDirShort/meta" meta
+    #echo "Cannot find meta directory. symlinking..."
+    #ln -s "$scriptDirShort/meta" meta
+    :
 fi
+export TEXINPUTS=$scriptDirShort//:
 
 # Check source file is valid LaTeX before feeding it to the
 # python compilation script

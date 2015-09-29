@@ -9,7 +9,8 @@ meta_dir=$3
 cd $dir
 
 for f in $(ls -1 $meta_dir | grep -v "pdf" | grep -v "tex"); do
-    ln -s "$meta_dir/$f" .
+    #ln -s "$meta_dir/$f" .
+    :
 done
 
 for f in *.tex; do
