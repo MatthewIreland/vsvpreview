@@ -87,7 +87,7 @@ def p_greyEnv(p):
 #    print str((p[1].startTime < p.parser.currentTime) and (p[1].endTime > p.parser.currentTime))
     
     if ((p[1].startTime <= p.parser.currentTime) and (p[1].endTime > p.parser.currentTime)):
-        p[0] = '\colorlet{oldcolour'+str(p.parser.colourVariableCounter)+'}{.}\\color{gray}'+p[2]+'\color{oldcolour'+str(p.parser.colourVariableCounter)+'}'
+        p[0] = '\colorlet{oldcolour'+str(p.parser.colourVariableCounter)+'}{.}\\leavevmode\\color{gray}'+p[2]+'\\leavevmode\color{oldcolour'+str(p.parser.colourVariableCounter)+'}'
         p.parser.colourVariableCounter += 1
     else:
         p[0] = p[2]
