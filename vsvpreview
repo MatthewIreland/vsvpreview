@@ -39,7 +39,9 @@ if [ ! -e "meta/vsvdefs.tex" ]; then
     #ln -s "$scriptDirShort/meta" meta
     :
 fi
-export TEXINPUTS=$scriptDirShort//:
+
+export TEXINPUTS=$(pwd)//:$scriptDirShort//:
+
 
 # Check source file is valid LaTeX before feeding it to the
 # python compilation script
