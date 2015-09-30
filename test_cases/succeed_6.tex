@@ -1,0 +1,35 @@
+% Test case 6. This should succeed.
+% Tests of special characters.
+
+\input{meta/vsvhdr_integrated.tex}
+
+\begin{vsvframe}{1-0:00.000}{1-5:00}{right}
+\vsvhl{1-0:15}{}{``This is a quote.''}
+
+\vsvhl{1-0:30}{}{... something about G\'{a}bor wavelets ...}
+
+\begin{vsvappear}{1-0:45}{}
+These are names with lots of diacritics: Sklen\v{c}\'arov\'a, R\'{o}\.{z}ycki.
+
+Here are some other characters: \^{c}.
+
+\begin{vsvgrey}{}{1-1:00}
+And some more:
+
+\begin{tabular}{lcc}
+    Input                   &       Text       &                 Math                  \\ \hline
+    \verb|\string^|         &     \string^     &              $\string^$               \\
+    \verb|\char`\^|         &     \char`\^     &              $\char`\^$               \\
+    \verb|\verb!^!|         &     \verb!^!     &              $\verb!^!$               \\ \hline
+    \verb|\textasciicircum| & \textasciicircum &                  ---                  \\
+    \verb|\^{}|             & \^{} (e.g. \^a)  &                  ---                  \\ \hline
+    \verb|\hat{}|           &       ---        &       $\hat{}$ (e.g. $\hat a$)        \\
+    \verb|\wedge|           &       ---        &      $\wedge$ (e.g. $a\wedge b$)      \\
+    \verb|\widehat{}|       &       ---        & $\widehat{\ }$ (e.g. $\widehat{abc}$) \\
+\end{tabular}
+\end{vsvgrey}
+\end{vsvappear}
+
+\end{vsvframe}
+
+\input{meta/vsvftr.tex}
