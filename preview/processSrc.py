@@ -153,6 +153,7 @@ if __name__ == '__main__':
                     outputFile.write("\input{meta/vsvhdr_right.tex}\n\n")
                 else:
                     raise UnknownFrameTypeError(frame)
+                outputFile.write("\\phantomsection\\stepcounter{section}\\addcontentsline{toc}{section}{\\protect\\numberline{\\thesection}"+currentTime.__str__()+"}\n\n")
                 outputFile.write(result)
                 outputFile.write("\input{meta/vsvftr.tex}\n")
             if (subprocess.call(["remove_empty_lists.pl" + " " + filename], shell=True) != 0):
