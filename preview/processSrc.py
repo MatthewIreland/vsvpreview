@@ -121,6 +121,8 @@ if __name__ == '__main__':
             frame.timecodeList.append(frame.startTime)
         #frame.timecodeList.append(frame.endTime)
         frame.timecodeList.sort()
+        if (len(frame.timecodeList) > 1):
+            frame.timecodeList.pop()     # It's not meaningful to output the end time.
     
     
         # step 4.ii: iterate over timecode list, setting globals.currentTime, to produce
