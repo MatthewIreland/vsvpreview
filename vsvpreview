@@ -4,6 +4,8 @@ scriptDir=$0
 scriptDirShort=${scriptDir:0:${#scriptDir}-10}
 srcFile=$1
 
+#dos2unix $srcFile
+
 changed=false
 git pull | grep -q -v 'Already up-to-date.' && changed=true
 if ( "$changed" = true ); then
